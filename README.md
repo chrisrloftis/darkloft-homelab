@@ -5,3 +5,4 @@ HomeLab - TrueNAS, OKD, etc.
 - Setup S3
 - Finalize BOM
 - Purchase OKD hardware
+- Purchase UPS
