@@ -1,0 +1,32 @@
+apiVersion: v1
+baseDomain: darkloft.local  # Matches your UniFi DNS zone
+metadata:
+  name: ocp
+networking:
+  clusterNetwork:
+    - cidr: 10.109.32.0/19 # Also in OVN File
+      hostPrefix: 22
+  machineNetwork:
+    - cidr: 192.168.3.0/24 # Also in OVN File
+  networkType: OVNKubernetes
+  serviceNetwork:
+    - 10.101.16.0/22
+platform:
+  baremetal:
+    apiVIPs:
+      - 192.168.3.2
+    ingressVIPs:
+      - 192.168.3.3
+controlPlane:
+  architecture: amd64
+  hyperthreading: Enabled
+  name: master
+  replicas: 3
+compute:
+- architecture: amd64
+  hyperthreading: Enabled
+  name: worker
+  replicas: 0  # Set to 0 if doing a compact 3-node master-only cluster
+fips: false
+pullSecret: ''
+sshKey: ''

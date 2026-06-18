@@ -1,0 +1,151 @@
+---
+apiVersion: v1beta1
+kind: AgentConfig
+metadata:
+  name: ocp
+rendezvousIP: 192.168.3.4
+hosts:
+  - hostname: master-0.ocp.darkloft.local
+    role: master
+    rootDeviceHints:
+      deviceName: "/dev/nvme0n1"
+    interfaces:
+      - name: enp3s0
+        macAddress: 84:47:09:71:86:f3
+      - name: eno1
+        macAddress: 84:47:09:71:86:f4
+    networkConfig:
+      interfaces:
+        - name: bond0
+          type: bond
+          state: up
+          mac-address: 84:47:09:71:86:f3
+          mtu: 1500
+          ipv4:
+            enabled: true
+            address:
+              - ip: 192.168.3.4
+                prefix-length: 24
+            dhcp: false
+          ipv6:
+            enabled: false
+          link-aggregation:
+            mode: active-backup
+            options:
+              miimon: "150"
+              primary: enp3s0
+            port:
+              - enp3s0
+              - eno1
+        - name: enp3s0
+          description: enp3s0
+          state: down
+        - name: eno1
+          description: eno1
+          state: down
+      dns-resolver:
+        config:
+          server:
+            - 192.168.3.1
+      routes:
+        config:
+          - destination: 0.0.0.0/0
+            next-hop-address: 192.168.3.1
+            next-hop-interface: bond0
+            table-id: 254
+  - hostname: master-1.ocp.darkloft.local
+    role: master
+    rootDeviceHints:
+      deviceName: "/dev/nvme0n1"
+    interfaces:
+      - name: enp3s0
+        macAddress: 84:47:09:71:b5:ec
+      - name: eno1
+        macAddress: 84:47:09:71:b5:eb
+    networkConfig:
+      interfaces:
+        - name: bond0
+          type: bond
+          state: up
+          mac-address: 84:47:09:71:b5:ec
+          mtu: 1500
+          ipv4:
+            enabled: true
+            address:
+              - ip: 192.168.3.5
+                prefix-length: 24
+            dhcp: false
+          ipv6:
+            enabled: false
+          link-aggregation:
+            mode: active-backup
+            options:
+              miimon: "150"
+              primary: enp3s0
+            port:
+              - enp3s0
+              - eno1
+        - name: enp3s0
+          description: enp3s0
+          state: down
+        - name: eno1
+          description: eno1
+          state: down
+      dns-resolver:
+        config:
+          server:
+            - 192.168.3.1
+      routes:
+        config:
+          - destination: 0.0.0.0/0
+            next-hop-address: 192.168.3.1
+            next-hop-interface: bond0
+            table-id: 254
+  - hostname: master-2.ocp.darkloft.local
+    role: master
+    rootDeviceHints:
+      deviceName: "/dev/nvme0n1"
+    interfaces:
+      - name: enp3s0
+        macAddress: 84:47:09:71:87:1c
+      - name: eno1
+        macAddress: 84:47:09:71:87:1b
+    networkConfig:
+      interfaces:
+        - name: bond0
+          type: bond
+          state: up
+          mac-address: 84:47:09:71:87:1c
+          mtu: 1500
+          ipv4:
+            enabled: true
+            address:
+              - ip: 192.168.3.6
+                prefix-length: 24
+            dhcp: false
+          ipv6:
+            enabled: false
+          link-aggregation:
+            mode: active-backup
+            options:
+              miimon: "150"
+              primary: enp3s0
+            port:
+              - enp3s0
+              - eno1
+        - name: enp3s0
+          description: enp3s0
+          state: down
+        - name: eno1
+          description: eno1
+          state: down
+      dns-resolver:
+        config:
+          server:
+            - 192.168.3.1
+      routes:
+        config:
+          - destination: 0.0.0.0/0
+            next-hop-address: 192.168.3.1
+            next-hop-interface: bond0
+            table-id: 254
