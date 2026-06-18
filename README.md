@@ -1,8 +1,9 @@
 # darkloft-homelab
-HomeLab - TrueNAS, OKD, etc.
+HomeLab - OCP/OKD, etc.
 
-@TODO
-- Setup S3
-- Finalize BOM
-- Purchase OKD hardware
-- Purchase UPS
+@TODO - Implementation
+- Install Synology CSI Driver <https://github.com/SynologyOpenSource/synology-csi/tree/main>
+- Install Virt Operator
+
+@TODO - Purchasing
+- Second UPS
