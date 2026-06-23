@@ -1,0 +1,61 @@
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: synology-smb-pvc-test
+  namespace: smoke-tests
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Gi
+  storageClassName: synostorage-smb
+  volumeMode: Filesystem
+--- 
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: synology-test-job
+  namespace: smoke-tests
+spec:
+  template:
+    spec:
+      containers:
+        - name: test-container
+          image: alpine
+          command:
+            - "/bin/sh"
+            - "-c"
+            - |
+              for i in 1 2 3 4 5; do
+                echo "Line $i: CSI is working at $(date)" >> /data/test.txt
+                if [ $i -lt 5 ]; then sleep 6; fi
+              done
+          volumeMounts:
+            - name: test-volume
+              mountPath: /data
+      restartPolicy: Never
+      volumes:
+        - name: test-volume
+          persistentVolumeClaim:
+            claimName: synology-smb-pvc-test # Uses your existing test PVC
+  backoffLimit: 1
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: csi-debug-pod
+  namespace: smoke-tests
+spec:
+  containers:
+    - name: debug-container
+      image: alpine
+      command: ["cat", "/data/test.txt"]
+      volumeMounts:
+        - name: test-volume
+          mountPath: /data
+  restartPolicy: Never
+  volumes:
+    - name: test-volume
+      persistentVolumeClaim:
+        claimName: synology-smb-pvc-test
