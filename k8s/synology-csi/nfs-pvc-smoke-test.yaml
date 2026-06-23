@@ -1,0 +1,13 @@
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: synology-nfs-pvc-test
+  namespace: smoke-tests
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Gi
+  storageClassName: synology-nfs-storage
+  volumeMode: Filesystem
