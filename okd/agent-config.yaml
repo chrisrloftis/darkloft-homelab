@@ -56,7 +56,7 @@ hosts:
   - hostname: master-1.ocp.darkloft.local
     role: master
     rootDeviceHints:
-      deviceName: "/dev/nvme0n1"
+      deviceName: "/dev/disk/by-path/pci-0000:01:00.0-nvme-1"
     interfaces:
       - name: enp3s0
         macAddress: 84:47:09:71:b5:ec
