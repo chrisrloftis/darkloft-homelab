@@ -8,7 +8,7 @@ hosts:
   - hostname: master-0.ocp.darkloft.local
     role: master
     rootDeviceHints:
-      deviceName: "/dev/nvme0n1"
+      deviceName: "/dev/disk/by-path/pci-0000:01:00.0-nvme-1"
     interfaces:
       - name: enp3s0
         macAddress: 84:47:09:71:86:f3
@@ -104,7 +104,7 @@ hosts:
   - hostname: master-2.ocp.darkloft.local
     role: master
     rootDeviceHints:
-      deviceName: "/dev/nvme0n1"
+      deviceName: "/dev/disk/by-path/pci-0000:01:00.0-nvme-1"
     interfaces:
       - name: enp3s0
         macAddress: 84:47:09:71:87:1c
