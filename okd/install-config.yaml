@@ -4,7 +4,7 @@ metadata:
   name: ocp
 networking:
   clusterNetwork:
-    - cidr: 10.100.10.0/19 # Also in OVN File
+    - cidr: 10.100.0.0/19 # Also in OVN File
       hostPrefix: 22
   machineNetwork:
     - cidr: 192.168.3.0/24 # Also in OVN File
