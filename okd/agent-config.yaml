@@ -211,7 +211,7 @@ hosts:
         - name: bond0
           type: bond
           state: up
-          mac-address: 00:a5:69:88:2b:d9
+          mac-address: 84:47:09:86:96:e9
           mtu: 1500
           ipv4:
             enabled: true
