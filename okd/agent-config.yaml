@@ -197,3 +197,51 @@ hosts:
             next-hop-address: 192.168.3.1
             next-hop-interface: bond0
             table-id: 254
+  - hostname: worker-2.ocp.darkloft.local
+    role: worker
+    rootDeviceHints:
+      deviceName: "/dev/disk/by-path/pci-0000:04:00.0-nvme-1"
+    interfaces:
+      - name: enp1s0
+        macAddress: 84:47:09:86:96:e9
+      - name: enp2s0
+        macAddress: 84:47:09:86:95:aa
+    networkConfig:
+      interfaces:
+        - name: bond0
+          type: bond
+          state: up
+          mac-address: 00:a5:69:88:2b:d9
+          mtu: 1500
+          ipv4:
+            enabled: true
+            address:
+              - ip: 192.168.3.8
+                prefix-length: 24
+            dhcp: false
+          ipv6:
+            enabled: false
+          link-aggregation:
+            mode: active-backup
+            options:
+              miimon: "150"
+              primary: enp6s0
+            port:
+              - enp1s0
+              - enp2s0
+        - name: enp1s0
+          description: enp1s0
+          state: down
+        - name: enp2s0
+          description: enp2s0
+          state: down
+      dns-resolver:
+        config:
+          server:
+            - 192.168.3.1
+      routes:
+        config:
+          - destination: 0.0.0.0/0
+            next-hop-address: 192.168.3.1
+            next-hop-interface: bond0
+            table-id: 254

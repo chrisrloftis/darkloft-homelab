@@ -26,7 +26,7 @@ compute:
 - architecture: amd64
   hyperthreading: Enabled
   name: worker
-  replicas: 1
+  replicas: 2
 fips: false
 pullSecret: ''
 sshKey: ''
