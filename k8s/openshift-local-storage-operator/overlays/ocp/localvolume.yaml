@@ -1,0 +1,22 @@
+apiVersion: local.storage.openshift.io/v1
+kind: LocalVolume
+metadata:
+  name: local-disks-master
+  namespace: openshift-local-storage
+spec:
+  tolerations:
+  - key: node-role.kubernetes.io/master
+    operator: Exists
+    effect: NoSchedule
+  nodeSelector:
+    nodeSelectorTerms:
+    - matchExpressions:
+      - key: node-role.kubernetes.io/master
+        operator: Exists
+  storageClassDevices:
+  - storageClassName: local-block
+    volumeMode: Block
+    devicePaths:
+    - /dev/disk/by-path/pci-0000:05:00.0-nvme-1 # master-0 nvme-WD_BLACK_SN7100_2TB_25354V801147
+    - /dev/disk/by-path/pci-0000:05:00.0-nvme-1 # master-1 nvme-WD_BLACK_SN7100_2TB_25354V801752
+    - /dev/disk/by-path/pci-0000:05:00.0-nvme-1 # master-2 nvme-WD_BLACK_SN7100_2TB_25354V800143
