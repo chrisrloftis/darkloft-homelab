@@ -1,0 +1,29 @@
+---
+# VerticalPodAutoscaler for Vault - let it manage its own resource needs
+apiVersion: autoscaling.k8s.io/v1
+kind: VerticalPodAutoscaler
+metadata:
+  name: vault
+  namespace: vault
+  labels:
+    app.kubernetes.io/instance: vault
+    app.kubernetes.io/name: vault
+spec:
+  targetRef:
+    apiVersion: apps/v1
+    kind: StatefulSet
+    name: vault
+  updatePolicy:
+    updateMode: "Auto"
+  resourcePolicy:
+    containerPolicies:
+      - containerName: vault
+        minAllowed:
+          cpu: 25m
+          memory: 128Mi
+        maxAllowed:
+          cpu: "500m"
+          memory: "1Gi"
+        controlledResources:
+          - cpu
+          - memory

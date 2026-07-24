@@ -1,0 +1,50 @@
+---
+# Allow Vault to delegate permissions to service accounts it creates
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: vault-auth-delegator
+  labels:
+    app.kubernetes.io/name: vault
+    app.kubernetes.io/instance: vault
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: system:auth-delegator
+subjects:
+  - kind: ServiceAccount
+    name: vault-sa
+    namespace: vault
+---
+# Role for Vault to interact with Kubernetes API (auth methods, dynamic secrets)
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: vault-k8s
+  labels:
+    app.kubernetes.io/name: vault
+    app.kubernetes.io/instance: vault
+rules:
+  - apiGroups: [""]
+    resources: ["serviceaccounts", "services"]
+    verbs: ["get", "list", "watch"]
+  - apiGroups: ["rbac.authorization.k8s.io"]
+    resources: ["clusterroles", "clusterrolebindings"]
+    verbs: ["get", "list", "watch"]
+---
+# Bind Vault service account to the k8s cluster role
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: vault-k8s
+  labels:
+    app.kubernetes.io/name: vault
+    app.kubernetes.io/instance: vault
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: vault-k8s
+subjects:
+  - kind: ServiceAccount
+    name: vault-sa
+    namespace: vault

@@ -1,0 +1,11 @@
+---
+apiVersion: kustomize.config.k8s.io/v1alpha1
+kind: Component
+resources:
+  - certificate.yaml
+  - ingress-route.yaml
+configMapGenerator:
+  - name: vault-tls-config
+    namespace: vault
+    literals:
+      - ca-org=vault-homelab

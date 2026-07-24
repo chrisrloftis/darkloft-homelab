@@ -1,0 +1,53 @@
+---
+# External service for client traffic (ClusterIP)
+apiVersion: v1
+kind: Service
+metadata:
+  name: vault
+  namespace: vault
+  labels:
+    app.kubernetes.io/instance: vault
+    app.kubernetes.io/name: vault
+spec:
+  type: ClusterIP
+  selector:
+    app.kubernetes.io/name: vault
+  ports:
+    - name: http
+      port: 8200
+      targetPort: 8200
+      protocol: TCP
+    - name: https-internal
+      port: 8201
+      targetPort: 8201
+      protocol: TCP
+---
+# Headless service for StatefulSet pod DNS resolution
+# Each pod gets a stable DNS name: vault-N.vault-internal.vault.svc.cluster.local
+apiVersion: v1
+kind: Service
+metadata:
+  name: vault-internal
+  namespace: vault
+  labels:
+    app.kubernetes.io/instance: vault
+    app.kubernetes.io/name: vault
+spec:
+  type: ClusterIP
+  clusterIP: None
+  publishNotReadyAddresses: true
+  selector:
+    app.kubernetes.io/name: vault
+  ports:
+    - name: http
+      port: 8200
+      targetPort: 8200
+      protocol: TCP
+    - name: https-internal
+      port: 8201
+      targetPort: 8201
+      protocol: TCP
+    - name: http-rep
+      port: 8202
+      targetPort: 8202
+      protocol: TCP

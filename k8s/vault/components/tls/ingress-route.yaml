@@ -1,0 +1,49 @@
+---
+# OpenShift Route for Vault external access
+# This exposes Vault through the OpenShift ingress layer with TLS termination options
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: vault
+  namespace: vault
+  labels:
+    app.kubernetes.io/instance: vault
+    app.kubernetes.io/name: vault
+  annotations:
+    # Route can be configured for re-encrypt or passthrough TLS
+    # passthrough: For end-to-end TLS (recommended for Vault)
+    # reencrypt: For OpenShift-terminated TLS with backend verification
+    openshift.io/hide-warning: "true"
+spec:
+  host: "" # Set in overlay to your desired hostname
+  to:
+    kind: Service
+    name: vault
+    weight: 100
+  port:
+    targetPort: http
+  tls:
+    # passthrough recommended for Vault to maintain end-to-end TLS
+    termination: passthrough
+  wildcardPolicy: None
+---
+# Internal route for cluster-internal access (no external exposure)
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: vault-internal
+  namespace: vault
+  labels:
+    app.kubernetes.io/instance: vault
+    app.kubernetes.io/name: vault
+spec:
+  host: "" # Set in overlay to your desired internal hostname
+  to:
+    kind: Service
+    name: vault-internal
+    weight: 100
+  port:
+    targetPort: http
+  tls:
+    termination: reencrypt
+  wildcardPolicy: None

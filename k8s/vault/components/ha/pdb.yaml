@@ -1,0 +1,16 @@
+---
+# PodDisruptionBudget for Vault HA cluster
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: vault
+  namespace: vault
+  labels:
+    app.kubernetes.io/instance: vault
+    app.kubernetes.io/name: vault
+spec:
+  minAvailable: 2
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: vault
+      app.kubernetes.io/instance: vault
