@@ -1,8 +1,8 @@
 apiVersion: operators.coreos.com/v1alpha1
 kind: ClusterServiceVersion
 metadata:
-  name: local-storage-operator.v5.0.0
-  namespace: placeholder
+  name: local-storage-operator.v4.22.0-202607151755
+  namespace: openshift-local-storage
   annotations:
     alm-examples: |-
       [
@@ -165,7 +165,7 @@ spec:
       url: https://github.com/openshift/local-storage-operator/tree/main/docs
     - name: Source Repository
       url: https://github.com/openshift/local-storage-operator
-  version: 5.0.0
+  version: 4.22.0-202607151755
   maturity: stable
   maintainers:
     - email: aos-storage-staff@redhat.com
