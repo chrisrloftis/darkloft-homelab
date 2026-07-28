@@ -1,0 +1,5 @@
+FROM quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:<dtk-image-hash> AS builder
+WORKDIR /build
+RUN apk add --no-cache git make gcc # or dnf equivalents in DTK
+COPY r8125-source/ .
+RUN make -C /usr/src/kernels/$(uname -r) M=$(pwd) modules

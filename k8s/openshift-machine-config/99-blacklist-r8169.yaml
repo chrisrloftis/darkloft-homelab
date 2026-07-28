@@ -1,0 +1,16 @@
+apiVersion: machineconfiguration.openshift.io/v1
+kind: MachineConfig
+metadata:
+  labels:
+    machineconfiguration.openshift.io/role: worker
+  name: 99-blacklist-r8169
+spec:
+  config:
+    ignition:
+      version: 3.2.0
+    storage:
+      files:
+      - contents:
+          source: data:,blacklist%20r8169%0A
+        mode: 420
+        path: /etc/modprobe.d/blacklist-r8169.conf

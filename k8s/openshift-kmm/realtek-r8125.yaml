@@ -1,0 +1,16 @@
+apiVersion: kmm.sigs.x-k8s.io/v1beta1
+kind: Module
+metadata:
+  name: realtek-r8125
+  namespace: openshift-kmm
+spec:
+  moduleLoader:
+    container:
+      modprobe:
+        moduleName: r8125
+      kernelMappings:
+        - regexp: '^.*$'
+          containerImage: <your-registry>/path/to/compiled-r8125-image:latest
+  selector:
+    matchLabels:
+      feature.node.kubernetes.io/nic-vendor-realtek: "true"
