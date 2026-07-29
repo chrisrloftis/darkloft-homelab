@@ -1,0 +1,48 @@
+apiVersion: nfd.openshift.io/v1
+kind: NodeFeatureDiscovery
+metadata:
+  name: nfd-instance
+  namespace: openshift-nfd
+spec:
+  workerConfig:
+    configData: |
+      core:
+        sleepInterval: 60s
+        sources:
+          - pci
+      sources:
+        pci:
+          deviceClassWhitelist:
+            - "02"     # Network controllers (NICs)
+            - "0200"   # Ethernet controllers
+            - "0207"   # InfiniBand controllers
+            - "03"     # Display controllers (GPUs)
+          deviceLabelFields:
+            - "vendor"
+            - "device"
+            - "class"
+---
+apiVersion: nfd.openshift.io/v1alpha1
+kind: NodeFeatureRule
+metadata:
+  name: label-pci-network-cards
+  # REMOVED namespace line to prevent Operator filtering issues
+spec:
+  rules:
+    - name: "network.vendor.intel"
+      labels:
+        # Note: Custom labels MUST use the permitted feature sub-namespace prefix
+        feature.node.kubernetes.io/nic-vendor-intel: "true"
+      matchFeatures:
+        - feature: pci.device
+          matchExpressions:
+            vendor: { op: In, value: ["8086"] }
+            class: { op: In, value: ["0200"] }
+    - name: "network.vendor.realtek"
+      labels:
+        feature.node.kubernetes.io/nic-vendor-realtek: "true"
+      matchFeatures:
+        - feature: pci.device
+          matchExpressions:
+            vendor: { op: In, value: ["10ec"] }
+            class: { op: In, value: ["0200"] }
