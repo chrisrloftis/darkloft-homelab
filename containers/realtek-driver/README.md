@@ -18,7 +18,7 @@ sed -i '' 's/#define RTL_NAPI_CONFIG(ndev, priv, function, weight)   netif_napi_
 ## 4. Build Image 
 tar -cf - Containerfile src Makefile | podman build \
     --no-cache \
-    --authfile "/Users/cloftis/Documents/GitHub/ps.json" \
+    --authfile <authfile.json> \
     --platform linux/amd64 \
     -t realtek-driver:latest \
     -t realtek-driver:v0.0.1 \
