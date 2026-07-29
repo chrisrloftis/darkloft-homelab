@@ -4,13 +4,14 @@ metadata:
   name: realtek-r8125
   namespace: openshift-kmm
 spec:
+  registryTLS:
+    insecureSkipTLSVerify: true  # Ignores internal registry certificate errors
   moduleLoader:
     container:
       modprobe:
         moduleName: r8125
       kernelMappings:
         - regexp: '^.*$'
-          containerImage: <your-registry>/path/to/compiled-r8125-image:latest
+          containerImage: "default-route-openshift-image-registry.apps.ocp.darkloft.local/openshift-kmm/realtek-driver:v0.0.1"
   selector:
-    matchLabels:
-      feature.node.kubernetes.io/nic-vendor-realtek: "true"
+    feature.node.kubernetes.io/nic-vendor-realtek: "true"
