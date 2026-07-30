@@ -6,6 +6,7 @@ resources:
 - ./service-account.yaml
 - ./rbac.yaml
 - ./argocd.yaml
+- ./operatorgroup.yaml
 patches:
   - target:
       version: v1
@@ -16,3 +17,12 @@ patches:
       - op: add
         path: /spec/plugins/-
         value: openshift-gitops-plugin
+  - target:
+      kind: Deployment
+      name: gitops-operator-controller-manager
+    patch: |-
+      - op: add
+        path: /spec/template/spec/containers/0/env/- 
+        value:
+          name: ENABLE_CONSOLE_PLUGIN
+          value: "true"
