@@ -3,11 +3,11 @@ HomeLab - OCP/OKD, etc.
 
 @TODO - Implementation
 - [ ] Install Synology CSI Driver <https://github.com/SynologyOpenSource/synology-csi/tree/main>
-- [x] Repave Worker-2
-- [ ] ~Install LSO~ + Overlay
+- [x] ~Repave Worker-2~
+- [x] ~Install LSO + Overlay~
 - [ ] Install ODF + Overlay
 - [ ] Install Vault + ~Overlay~
-- [x] Install GitOps/Argo + Overlay
+- [x] ~Install GitOps/Argo + Overlay~
 - [ ] Install Virt Operator + Overlay
 - [ ] Install Zitadel <https://github.com/zitadel/zitadel>
 
