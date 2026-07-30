@@ -7,7 +7,7 @@ HomeLab - OCP/OKD, etc.
 - [ ] ~Install LSO~ + Overlay
 - [ ] Install ODF + Overlay
 - [ ] Install Vault + ~Overlay~
-- [ ] Install GitOps/Argo + Overlay
+- [x] Install GitOps/Argo + Overlay
 - [ ] Install Virt Operator + Overlay
 - [ ] Install Zitadel <https://github.com/zitadel/zitadel>
 
