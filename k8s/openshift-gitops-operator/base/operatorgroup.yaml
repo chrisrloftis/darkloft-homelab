@@ -3,6 +3,4 @@ kind: OperatorGroup
 metadata:
   name: openshift-gitops-operator-group
   namespace: openshift-gitops
-spec:
-  targetNamespaces:
-  - openshift-gitops
+spec: {}
