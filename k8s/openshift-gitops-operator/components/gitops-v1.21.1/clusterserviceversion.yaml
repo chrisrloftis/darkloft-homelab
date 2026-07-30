@@ -1,0 +1,46 @@
+apiVersion: operators.coreos.com/v1alpha1
+kind: ClusterServiceVersion
+metadata:
+  name: openshift-gitops-operator.v1.21.1
+  namespace: openshift-gitops
+spec:
+  version: 1.21.1
+  displayName: OpenShift GitOps Operator
+  description: OpenShift GitOps Operator for managing GitOps workflows
+  keywords:
+  - gitops
+  - openshift
+  providers:
+  - name: Red Hat
+    url: https://www.redhat.com
+  maintainers:
+  - name: Red Hat
+    email: support@redhat.com
+  installModes:
+  - type: OwnNamespace
+    supported: true
+  - type: SingleNamespace
+    supported: true
+  - type: AllNamespaces
+    supported: true
+  install:
+    strategy: deployment
+    spec:
+      deployments:
+      - name: gitops-operator
+        spec:
+          replicas: 1
+          selector:
+            matchLabels:
+              name: gitops-operator
+          template:
+            spec:
+              serviceAccountName: gitops-operator
+              containers:
+              - name: gitops-operator
+                image: quay.io/argoproj/argocd:v2.11.0
+                ports:
+                - containerPort: 8080
+                  name: http
+                - containerPort: 8081
+                  name: grpc
