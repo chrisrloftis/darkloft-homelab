@@ -5,20 +5,16 @@ resources:
 - ./namespace.yaml
 - ./service-account.yaml
 - ./rbac.yaml
-# - ./argocd.yaml
+- ./console-plugin.yaml
 - ./operatorgroup.yaml
+- ./network-policy.yaml
 patches:
   - target:
-      kind: Deployment
-      name: gitops-operator-controller-manager
+      group: operator.openshift.io
+      version: v1
+      kind: Console
+      name: cluster
     patch: |-
       - op: add
-        path: /spec/template/spec/containers/0/env/-
-        value:
-          name: ENABLE_CONSOLE_PLUGIN
-          value: "true"
-      - op: add
-        path: /spec/template/spec/containers/0/env/-
-        value:
-          name: CONSOLE_PLUGIN_PORT
-          value: "8080"
+        path: /spec/plugins/-
+        value: gitops-plugin
