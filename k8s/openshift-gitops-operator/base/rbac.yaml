@@ -1,0 +1,44 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: gitops-operator-role
+  namespace: openshift-gitops
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - pods
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - ""
+  resources:
+  - services
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - ""
+  resources:
+  - configmaps
+  verbs:
+  - get
+  - list
+  - watch
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: gitops-operator-role-binding
+  namespace: openshift-gitops
+subjects:
+- kind: ServiceAccount
+  name: gitops-operator
+  namespace: openshift-gitops
+roleRef:
+  kind: Role
+  name: gitops-operator-role
+  apiGroup: rbac.authorization.k8s.io
