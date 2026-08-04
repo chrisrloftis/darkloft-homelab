@@ -10,4 +10,4 @@ spec:
       name: gitops-plugin
       namespace: openshift-gitops
       port: 9001
-      path: /
+      basePath: /
