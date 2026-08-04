@@ -1,2 +1,0 @@
-# TODO 
-All things Terraform
