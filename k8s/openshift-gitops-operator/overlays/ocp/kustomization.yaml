@@ -4,28 +4,5 @@ components:
 - ../../components/gitops-v1.21.1
 resources:
 - ../../base
-- ./argocd.yaml
-patches:
-  - target:
-      version: v1
-      group: operator.openshift.io
-      kind: Console
-      name: cluster
-    patch: |-
-      - op: add
-        path: /spec/plugins/-
-        value: openshift-gitops-plugin
-  - target:
-      kind: Deployment
-      name: gitops-operator-controller-manager
-    patch: |-
-      - op: add
-        path: /spec/template/spec/containers/0/env/- 
-        value:
-          name: ENABLE_CONSOLE_PLUGIN
-          value: "true"
-      - op: add
-        path: /spec/template/spec/containers/0/env/-
-        value:
-          name: CONSOLE_PLUGIN_PORT
-          value: "8080"
+# - ./argocd.yaml
+patches: []
