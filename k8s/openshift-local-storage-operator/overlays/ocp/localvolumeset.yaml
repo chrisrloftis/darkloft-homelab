@@ -1,4 +1,4 @@
-apiVersion: local.storage.openshift.io/v1
+apiVersion: localvolumesets.local.storage.openshift.io/v1
 kind: LocalVolumeSet
 metadata:
   name: local-block-set
