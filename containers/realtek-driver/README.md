@@ -1,9 +1,7 @@
 # Instructions
 
 ```bash
-## 1. Clean out old attempts and establish a isolated repository folder context
-cd cd ~/containers/realtek-driver/
-rm -rf ./realtek-driver-context
+## 1. Clone the repo
 git clone <https://github.com/awesometic/realtek-r8125-dkms.git> ./realtek-driver-context
 cd ./realtek-driver-context
 
