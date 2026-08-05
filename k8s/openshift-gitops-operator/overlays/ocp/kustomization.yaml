@@ -4,5 +4,6 @@ components:
 - ../../components/gitops-v1.21.1
 resources:
 - ../../base
+- ../../applications
 # - ./argocd.yaml
 patches: []
