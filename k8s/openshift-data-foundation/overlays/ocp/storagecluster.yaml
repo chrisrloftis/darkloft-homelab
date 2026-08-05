@@ -8,6 +8,7 @@ metadata:
 spec:
   monDataDirHostPath: /var/lib/rook
   placement:
+    # Captures global management tools (metrics/blackbox)
     all:
       tolerations:
         - key: node-role.kubernetes.io/master
@@ -16,7 +17,17 @@ spec:
         - key: node-role.kubernetes.io/control-plane
           operator: Exists
           effect: NoSchedule
-    managed:
+    # 💥 TARGETS THE STUCK FILESYSTEM MDS PODS
+    mds:
+      tolerations:
+        - key: node-role.kubernetes.io/master
+          operator: Exists
+          effect: NoSchedule
+        - key: node-role.kubernetes.io/control-plane
+          operator: Exists
+          effect: NoSchedule
+    # 💥 TARGETS THE STUCK OBJECT STORE RGW PODS
+    rgw:
       tolerations:
         - key: node-role.kubernetes.io/master
           operator: Exists
