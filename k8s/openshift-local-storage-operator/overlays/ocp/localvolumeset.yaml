@@ -1,0 +1,26 @@
+apiVersion: local.storage.openshift.io/v1
+kind: LocalVolumeSet
+metadata:
+  name: local-block-set
+  namespace: openshift-local-storage
+spec:
+  tolerations:
+    - key: node-role.kubernetes.io/master
+      operator: Exists
+      effect: NoSchedule
+  nodeSelector:
+    nodeSelectorTerms:
+      - matchExpressions:
+          - key: node-role.kubernetes.io/master
+            operator: Exists
+  storageClassName: local-block
+  volumeMode: Block
+  deviceInclusions:
+    deviceTypes:
+      - disk
+    deviceMechanisms:
+      - NVMe
+  deviceFilters:
+    - path: /dev/disk/by-id/nvme-WD_BLACK_SN7100_2TB_25354V801147
+    - path: /dev/disk/by-id/nvme-WD_BLACK_SN7100_2TB_25354V801752
+    - path: /dev/disk/by-id/nvme-WD_BLACK_SN7100_2TB_25354V800143

@@ -3,4 +3,4 @@ kind: Kustomization
 components: []
 resources:
   - ../../base
-  - ./localvolume.yaml
+  - ./localvolumeset.yaml
