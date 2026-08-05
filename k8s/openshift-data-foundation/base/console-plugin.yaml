@@ -1,0 +1,13 @@
+apiVersion: console.openshift.io/v1
+kind: ConsolePlugin
+metadata:
+  name: odf-console-plugin
+spec:
+  displayName: "OpenShift Data Foundation"
+  backend:
+    type: Service
+    service:
+      name: odf-console
+      namespace: openshift-storage
+      port: 443
+      basePath: /
