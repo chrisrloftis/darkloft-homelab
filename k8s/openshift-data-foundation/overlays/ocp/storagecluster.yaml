@@ -6,9 +6,7 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "10"
 spec:
-  manageNodes: false
   monDataDirHostPath: /var/lib/rook
-  # Removed flexibleReplication line
   storageDeviceSets:
     - name: ocs-deviceset
       count: 1          # 1 drive per node
