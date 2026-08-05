@@ -14,3 +14,7 @@ oc adm taint nodes master-1.ocp.darkloft.local node-role.kubernetes.io/master:Pr
 oc adm taint nodes master-2.ocp.darkloft.local node-role.kubernetes.io/master:NoSchedule-
 oc adm taint nodes master-2.ocp.darkloft.local node-role.kubernetes.io/master:PreferNoSchedule
 ```
+
+## ODF Disks
+
+1x WD Black 2TB secondary per Master Node
