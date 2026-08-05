@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: odf-master-patcher
+  namespace: openshift-storage
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: odf-master-patcher
+  template:
+    metadata:
+      labels:
+        app: odf-master-patcher
+    spec:
+      serviceAccountName: ocs-operator # Uses existing high-privilege storage account to allow patching
+      tolerations:
+        - key: node-role.kubernetes.io/master
+          operator: Exists
+          effect: NoSchedule
+      containers:
+        - name: patcher
+          image: quay.io/openshift/origin-cli:latest
+          command:
+            - /bin/sh
+            - -c
+            - |
+              echo "Starting ODF master topology patcher loop..."
+              while true; do
+                # 1. Patch the stubborn Metrics & Blackbox deployments
+                for deploy in ocs-metrics-exporter odf-blackbox-exporter ocs-provider-server; do
+                  oc patch deployment/$deploy -n openshift-storage --type merge --patch '{"spec":{"template":{"spec":{"tolerations":[{"key":"node-role.kubernetes.io/master","operator":"Exists","effect":"NoSchedule"},{"key":"node-role.kubernetes.io/control-plane","operator":"Exists","effect":"NoSchedule"}]}}}}' 2>/dev/null
+                done
+
+                # 2. Patch dynamically spawned MDS and RGW deployments
+                oc get deployment -n openshift-storage -o name | grep -E 'rook-ceph-mds|rook-ceph-rgw' | while read -r r_deploy; do
+                  oc patch $r_deploy -n openshift-storage --type merge --patch '{"spec":{"template":{"spec":{"tolerations":[{"key":"node-role.kubernetes.io/master","operator":"Exists","effect":"NoSchedule"},{"key":"node-role.kubernetes.io/control-plane","operator":"Exists","effect":"NoSchedule"}]}}}}' 2>/dev/null
+                done
+
+                # 3. Patch the NooBaa DB StatefulSet cluster
+                oc patch statefulset/noobaa-db-pg-cluster-1 -n openshift-storage --type merge --patch '{"spec":{"template":{"spec":{"tolerations":[{"key":"node-role.kubernetes.io/master","operator":"Exists","effect":"NoSchedule"}]}}}}' 2>/dev/null
+
+                sleep 15
+              done
