@@ -20,14 +20,24 @@ patches:
       namespace: openshift-storage
     patch: |-
       - op: add
-        path: /spec/template/spec/tolerations/-
+        path: /spec/template/spec/tolerations
         value:
-          key: node-role.kubernetes.io/master
-          operator: Exists
-          effect: NoSchedule
+          - key: node-role.kubernetes.io/master
+            operator: Exists
+            effect: NoSchedule
+          - key: node-role.kubernetes.io/control-plane
+            operator: Exists
+            effect: NoSchedule
+  - target:
+      kind: StatefulSet
+      namespace: openshift-storage
+    patch: |-
       - op: add
-        path: /spec/template/spec/tolerations/-
+        path: /spec/template/spec/tolerations
         value:
-          key: node-role.kubernetes.io/control-plane
-          operator: Exists
-          effect: NoSchedule
+          - key: node-role.kubernetes.io/master
+            operator: Exists
+            effect: NoSchedule
+          - key: node-role.kubernetes.io/control-plane
+            operator: Exists
+            effect: NoSchedule
