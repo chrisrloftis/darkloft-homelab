@@ -3,3 +3,11 @@ kind: Kustomization
 resources:
   - ./namespace.yaml
   - ./operatorgroup.yaml
+  - ./localvolumedevicelinks.yaml
+  - ./localvolumediscoveries.yaml
+  - ./localvolumediscoveryresults.yaml
+  - ./localvolumes.yaml
+  - ./localvolumesets.yaml
+  - ./prometheus-role-binding.yaml
+  - ./prometheus-role.yaml
+  - ./subscription.yaml
