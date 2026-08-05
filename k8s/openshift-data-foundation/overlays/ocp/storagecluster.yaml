@@ -18,7 +18,7 @@ spec:
         - key: node-role.kubernetes.io/control-plane
           operator: Exists
           effect: NoSchedule
-    mds:
+    managed:
       tolerations:
         - key: node-role.kubernetes.io/master
           operator: Exists
@@ -26,16 +26,6 @@ spec:
         - key: node-role.kubernetes.io/control-plane
           operator: Exists
           effect: NoSchedule
-    rgw:
-      tolerations:
-        - key: node-role.kubernetes.io/master
-          operator: Exists
-          effect: NoSchedule
-        - key: node-role.kubernetes.io/control-plane
-          operator: Exists
-          effect: NoSchedule
-
-  # Keep your existing storageDeviceSets block intact below...
   storageDeviceSets:
     - name: ocs-deviceset
       count: 1          
