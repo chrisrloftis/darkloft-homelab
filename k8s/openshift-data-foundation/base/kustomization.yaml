@@ -5,3 +5,12 @@ resources:
   - ./operatorgroup.yaml
   - ./subscription.yaml
   - ./console-plugin.yaml
+patches:
+  - target:
+      group: operator.openshift.io
+      kind: Console
+      name: cluster
+    patch: |-
+      - op: add
+        path: /spec/plugins/-
+        value: odf-console-plugin
