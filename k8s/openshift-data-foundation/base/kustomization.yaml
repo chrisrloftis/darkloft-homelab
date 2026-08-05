@@ -5,6 +5,7 @@ resources:
   - ./operatorgroup.yaml
   - ./subscription.yaml
   - ./console-plugin.yaml
+  - ./rook-operator-config.yaml
 patches:
   - target:
       group: operator.openshift.io
