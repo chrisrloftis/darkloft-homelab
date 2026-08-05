@@ -9,3 +9,4 @@ resources:
   - ./localvolumesets.yaml
   - ./prometheus-role-binding.yaml
   - ./prometheus-role.yaml
+  - ./subscription.yaml

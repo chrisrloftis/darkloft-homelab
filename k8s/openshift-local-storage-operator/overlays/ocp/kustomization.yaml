@@ -5,4 +5,3 @@ components:
 resources:
   - ../../base
   - ./localvolume.yaml
-  - ./subscription.yaml
