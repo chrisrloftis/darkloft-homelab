@@ -7,8 +7,9 @@ metadata:
     argocd.argoproj.io/sync-wave: "10"
 spec:
   monDataDirHostPath: /var/lib/rook
+  
+  # 🥇 CORRECT NESTED LOCATION FOR COMPONENT PLACEMENT
   placement:
-    # Captures global management tools (metrics/blackbox)
     all:
       tolerations:
         - key: node-role.kubernetes.io/master
@@ -17,7 +18,6 @@ spec:
         - key: node-role.kubernetes.io/control-plane
           operator: Exists
           effect: NoSchedule
-    # 💥 TARGETS THE STUCK FILESYSTEM MDS PODS
     mds:
       tolerations:
         - key: node-role.kubernetes.io/master
@@ -26,7 +26,6 @@ spec:
         - key: node-role.kubernetes.io/control-plane
           operator: Exists
           effect: NoSchedule
-    # 💥 TARGETS THE STUCK OBJECT STORE RGW PODS
     rgw:
       tolerations:
         - key: node-role.kubernetes.io/master
@@ -35,29 +34,12 @@ spec:
         - key: node-role.kubernetes.io/control-plane
           operator: Exists
           effect: NoSchedule
-  managedResources:
-    cephFilesystems:
-      placement:
-        tolerations:
-          - key: node-role.kubernetes.io/master
-            operator: Exists
-            effect: NoSchedule
-          - key: node-role.kubernetes.io/control-plane
-            operator: Exists
-            effect: NoSchedule
-    cephObjectStores:
-      placement:
-        tolerations:
-          - key: node-role.kubernetes.io/master
-            operator: Exists
-            effect: NoSchedule
-          - key: node-role.kubernetes.io/control-plane
-            operator: Exists
-            effect: NoSchedule
+
+  # Keep your existing storageDeviceSets block intact below...
   storageDeviceSets:
     - name: ocs-deviceset
-      count: 1          # 1 drive per node
-      replica: 3        # Mirrored across all 3 nodes
+      count: 1          
+      replica: 3        
       resources:
         limits:
           cpu: "2"
