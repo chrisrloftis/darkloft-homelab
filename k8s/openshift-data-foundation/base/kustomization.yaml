@@ -13,4 +13,4 @@ patches:
     patch: |-
       - op: add
         path: /spec/plugins/-
-        value: odf-console-plugin
+        value: odf-console

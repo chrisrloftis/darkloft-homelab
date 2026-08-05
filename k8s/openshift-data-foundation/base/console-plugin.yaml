@@ -1,13 +1,56 @@
 apiVersion: console.openshift.io/v1
 kind: ConsolePlugin
 metadata:
-  name: odf-console-plugin
+  name: odf-console
 spec:
-  displayName: "OpenShift Data Foundation"
-  backend:
-    type: Service
+ backend:
     service:
-      name: odf-console
-      namespace: openshift-storage
-      port: 443
       basePath: /
+      name: odf-console-service
+      namespace: openshift-storage
+      port: 9001
+    type: Service
+    displayName: ODF Plugin
+    i18n:
+      loadType: ''
+    proxy:
+      - alias: provider-proxy
+        authorization: UserToken
+        endpoint:
+          service:
+            name: ux-backend-proxy
+            namespace: openshift-storage
+            port: 8888
+          type: Service
+      - alias: rosa-prometheus
+        authorization: UserToken
+        endpoint:
+          service:
+            name: prometheus
+            namespace: openshift-storage
+            port: 9339
+          type: Service
+      - alias: s3
+        authorization: None
+        endpoint:
+          service:
+            name: s3
+            namespace: openshift-storage
+            port: 443
+          type: Service
+      - alias: iam
+        authorization: None
+        endpoint:
+          service:
+            name: iam
+            namespace: openshift-storage
+            port: 443
+          type: Service
+      - alias: s3Vector
+        authorization: None
+        endpoint:
+          service:
+            name: vectors
+            namespace: openshift-storage
+            port: 443
+          type: Service
