@@ -7,18 +7,8 @@ metadata:
     argocd.argoproj.io/sync-wave: "10"
 spec:
   monDataDirHostPath: /var/lib/rook
-  
-  # 🥇 CORRECT NESTED LOCATION FOR COMPONENT PLACEMENT
   placement:
     all:
-      tolerations:
-        - key: node-role.kubernetes.io/master
-          operator: Exists
-          effect: NoSchedule
-        - key: node-role.kubernetes.io/control-plane
-          operator: Exists
-          effect: NoSchedule
-    managed:
       tolerations:
         - key: node-role.kubernetes.io/master
           operator: Exists
