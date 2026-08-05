@@ -4,3 +4,4 @@ components: []
 resources:
   - ../../base
   - ./localvolumeset.yaml
+  - ./storagecluster.yaml
