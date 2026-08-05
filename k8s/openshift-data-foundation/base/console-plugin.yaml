@@ -3,7 +3,7 @@ kind: ConsolePlugin
 metadata:
   name: odf-console
 spec:
-  displayName: "ODF Console"
+  displayName: "ODF Plugin"
   backend:
     type: Service
     service:
