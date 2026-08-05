@@ -4,14 +4,11 @@ metadata:
   name: ocs-storagecluster
   namespace: openshift-storage
   annotations:
-    # Forces Argo CD to wait for the ODF operator to be fully ready before deploying
     argocd.argoproj.io/sync-wave: "10"
 spec:
-  # Instructs ODF to use your pre-defined master node topology rather than altering node labels
   manageNodes: false
   monDataDirHostPath: /var/lib/rook
-  flexibleReplication: false
-  # Configures standard Ceph 3-way replication across your 3 master nodes
+  # Removed flexibleReplication line
   storageDeviceSets:
     - name: ocs-deviceset
       count: 1          # 1 drive per node
@@ -39,12 +36,10 @@ spec:
                     operator: Exists
       dataPVCTemplate:
         spec:
-          # Must match the storage class your LocalVolumeSet generated
           storageClassName: local-block
           accessModes:
             - ReadWriteOnce
           volumeMode: Block
           resources:
             requests:
-              # Matches the capacity of your 2TB (1863Gi) physical NVMe drives
               storage: 1863Gi
