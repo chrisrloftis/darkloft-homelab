@@ -19,3 +19,10 @@ spec:
   syncPolicy:
     syncOptions:
       - ServerSideApply=true
+      - CreateNamespace=true
+  ignoreDifferences:
+    - group: apps
+      kind: Deployment
+      namespace: openshift-storage
+      jsonPointers:
+        - /spec/template/spec/tolerations
