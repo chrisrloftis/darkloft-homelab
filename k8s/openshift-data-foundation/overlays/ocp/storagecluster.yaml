@@ -7,8 +7,6 @@ metadata:
     argocd.argoproj.io/sync-wave: "10"
 spec:
   monDataDirHostPath: /var/lib/rook
-  
-  # 🥇 THE VALID ROOT PLACEMENT SPECIFICATION
   placement:
     all:
       tolerations:
@@ -18,8 +16,6 @@ spec:
         - key: node-role.kubernetes.io/control-plane
           operator: Exists
           effect: NoSchedule
-
-  # 🥈 FORCE THE EXTERNAL SUB-COMPONENTS USING OVERRIDE DICTIONARIES
   overrides:
     cluster:
       spec:
