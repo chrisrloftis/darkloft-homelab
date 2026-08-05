@@ -17,17 +17,13 @@ spec:
             operator: Exists
   storageClassName: local-block
   volumeMode: Block
-  # Maximum number of matching devices the operator is allowed to claim per node
+  # Strictly limits the operator to claiming exactly ONE disk per master node
   maxDeviceCount: 1
-  # The strict schema-compliant filtering mechanism for v1alpha1
   deviceInclusionSpec:
     deviceTypes:
       - disk
     deviceMechanicalProperties:
       - NonRotational
-    # Targets your 2TB drives by bounding the size lookup parameters
-    minSize: 1800Gi
-    maxSize: 2000Gi
-    # Matches the string identifier from your NVMe controller firmware
-    models:
-      - WD_BLACK_SN7100_2TB
+    # Broadened to safely capture your 1863Gi (2TB) NVMe drives
+    minSize: 1500Gi
+    maxSize: 2500Gi
