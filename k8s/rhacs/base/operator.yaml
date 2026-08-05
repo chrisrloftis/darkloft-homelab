@@ -1,0 +1,7 @@
+# This is a placeholder for the operator deployment that would be included in the ACS 2.11.1 release
+# In a real deployment, this would contain the actual operator manifest
+
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: rhacs-operator-system

@@ -1,0 +1,16 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- operator.yaml
+- crds.yaml
+- subscription.yaml
+
+# Patch to use the specified storage class for Central database PVCs
+patches:
+- target:
+    kind: Central
+    name: central
+  patch: |-
+    - op: add
+      path: /spec/central/db/storageClassName
+      value: ocs-storagecluster-ceph-rbd

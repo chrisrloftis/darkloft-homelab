@@ -1,0 +1,26 @@
+# This is a placeholder for the CRDs that would be included in the ACS 2.11.1 release
+# In a real deployment, these would be the actual CustomResourceDefinitions for ACS
+
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: centrals.security.clusteraccess.redhat.com
+spec:
+  group: security.clusteraccess.redhat.com
+  versions:
+  - name: v1
+    schema:
+      openAPIV3Schema:
+        type: object
+        properties:
+          spec:
+            type: object
+            properties:
+              central:
+                type: object
+                properties:
+                  db:
+                    type: object
+                    properties:
+                      storageClassName:
+                        type: string
