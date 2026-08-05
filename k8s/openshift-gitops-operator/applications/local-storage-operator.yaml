@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: openshift-gitops-operator
+  name: local-storage-operator
   namespace: openshift-gitops
   annotations:
     argocd.argoproj.io/sync-wave: "1"
@@ -13,7 +13,7 @@ spec:
     server: https://kubernetes.default.svc
   project: default
   source:
-    path: k8s/openshift-gitops-operator/overlays/ocp
+    path: k8s/openshift-local-storage-operator/overlays/ocp
     repoURL: https://github.com/chrisrloftis/darkloft-homelab
     targetRevision: HEAD
   syncPolicy:
