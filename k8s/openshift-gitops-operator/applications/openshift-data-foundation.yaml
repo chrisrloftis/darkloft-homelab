@@ -20,14 +20,14 @@ spec:
     syncOptions:
       - CreateNamespace=true
       - ServerSideApply=true  
-  ignoreDifferences:
-    - group: apps
-      kind: Deployment
-      namespace: openshift-storage
-      jsonPointers:
-        - /spec/template/spec/tolerations
-    - group: apps
-      kind: StatefulSet
-      namespace: openshift-storage
-      jsonPointers:
-        - /spec/template/spec/tolerations
+  # ignoreDifferences:
+  #   - group: apps
+  #     kind: Deployment
+  #     namespace: openshift-storage
+  #     jsonPointers:
+  #       - /spec/template/spec/tolerations
+  #   - group: apps
+  #     kind: StatefulSet
+  #     namespace: openshift-storage
+  #     jsonPointers:
+  #       - /spec/template/spec/tolerations
