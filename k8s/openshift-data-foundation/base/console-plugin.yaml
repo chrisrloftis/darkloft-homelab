@@ -3,11 +3,11 @@ kind: ConsolePlugin
 metadata:
   name: odf-console
 spec:
-  displayName: "OpenShift Data Foundation"
+  displayName: "ODF Console"
   backend:
     type: Service
     service:
-      name: odf-console
+      name: odf-console-service
       namespace: openshift-storage
-      port: 443
+      port: 9001
       basePath: /
