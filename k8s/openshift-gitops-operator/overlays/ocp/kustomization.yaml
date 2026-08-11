@@ -5,5 +5,5 @@ components:
 resources:
 - ../../base
 - ../../applications
-# - ./argocd.yaml
+- ./argocd.yaml
 patches: []
