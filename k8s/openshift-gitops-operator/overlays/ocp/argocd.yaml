@@ -193,3 +193,25 @@ spec:
     provider: dex
   tls:
     ca: {}
+  resourceCustomizations: |
+    operators.coreos.com/Subscription:
+      health.lua: |
+        hs = {}
+        if obj.status ~= nil and obj.status.conditions ~= nil then
+          for _, condition in ipairs(obj.status.conditions) do
+            if condition.type == "InstallPlanPending" and condition.status == "True" then
+              hs.status = "Healthy"
+              hs.message = "InstallPlan is waiting for manual approval (Overridden to Healthy)"
+              return hs
+            end
+          end
+        end
+        -- Default fallback logic if it's not pending approval
+        if obj.status ~= nil and obj.status.state ~= nil then
+          if obj.status.state == "AtLatestKnown" or obj.status.state == "UpgradeAvailable" then
+            hs.status = "Healthy"
+            return hs
+          end
+        end
+        hs.status = "Progressing"
+        return hs
