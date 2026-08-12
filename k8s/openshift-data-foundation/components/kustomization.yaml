@@ -5,13 +5,13 @@ resources:
   - ./storage-core-workloads.yaml
 patches:
   # --- CRITICAL CORE (Must run on Masters alongside Storage) ---
-  - path: core-master-patch.yaml
+  - path: ./storage-core-workloads.yaml
     target:
       namespace: openshift-storage
       kind: Deployment
       name: rook-ceph-rgw-ocs-storagecluster-cephobjectstore-a
   # The NooBaa DB Custom Resource must also be pinned to masters for storage attachment
-  - path: noobaa-db-patch.yaml
+  - path: ./noobaa-db-patch.yaml
     target:
       group: postgresql.cnpg.io
       version: v1
@@ -19,17 +19,17 @@ patches:
       name: noobaa-db-pg-cluster
       namespace: openshift-storage
   # --- AUXILIARY INFRASTRUCTURE (Offloaded to Worker Nodes) ---
-  - path: aux-worker-patch.yaml
+  - path: ./storage-aux-workloads.yaml
     target:
       namespace: openshift-storage
       kind: Deployment
       name: ocs-metrics-exporter
-  - path: aux-worker-patch.yaml
+  - path: ./storage-aux-workloads.yaml
     target:
       namespace: openshift-storage
       kind: Deployment
       name: odf-blackbox-exporter
-  - path: aux-worker-patch.yaml
+  - path: ./storage-aux-workloads.yaml
     target:
       namespace: openshift-storage
       kind: Deployment
