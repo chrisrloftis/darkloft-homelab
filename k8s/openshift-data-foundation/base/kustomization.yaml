@@ -5,7 +5,6 @@ resources:
   - ./operatorgroup.yaml
   - ./subscription.yaml
   - ./console-plugin.yaml
-  - ./nooba.yaml
   # - ./rook-operator-config.yaml
 patches:
   - target:
