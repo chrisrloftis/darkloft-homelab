@@ -4,5 +4,5 @@ metadata:
   name: openshift-storage
   annotations:
     argocd.argoproj.io/sync-wave: "1"
-    openshift.io/node-selector: "node-role.kubernetes.io/control-plane="
-    scheduler.alpha.kubernetes.io/defaultTolerations: '[{"key": "node-role.kubernetes.io/control-plane", "operator": "Exists", "effect": "NoSchedule"}]'
+    # openshift.io/node-selector: "node-role.kubernetes.io/control-plane="
+    # scheduler.alpha.kubernetes.io/defaultTolerations: '[{"key": "node-role.kubernetes.io/control-plane", "operator": "Exists", "effect": "NoSchedule"}]'
