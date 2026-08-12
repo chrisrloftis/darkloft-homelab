@@ -27,11 +27,24 @@ spec:
             - matchExpressions:
                 - key: node-role.kubernetes.io/master
                   operator: Exists
-
-    # --- OFFLOAD AUXILIARY INFRASTRUCTURE TO WORKERS ---
-    # (Leaving tolerations empty forces them off the masters)
-    monitoring:
-      tolerations: []
+    noobaa:
+      tolerations:
+        - key: node-role.kubernetes.io/master
+          operator: Exists
+          effect: NoSchedule
+        - key: node-role.kubernetes.io/control-plane
+          operator: Exists
+          effect: NoSchedule
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+            - matchExpressions:
+                - key: node-role.kubernetes.io/control-plane
+                  operator: Exists
+    # --- OFFLOAD AUXILIARY INFRASTRUCTURE TO STANDARD WORKERS ---
+    all:
+      # Explicitly clear out operator-forced storage labels
+      nodeSelector: {}
       nodeAffinity:
         requiredDuringSchedulingIgnoredDuringExecution:
           nodeSelectorTerms:
