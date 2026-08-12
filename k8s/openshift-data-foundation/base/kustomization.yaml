@@ -5,7 +5,7 @@ resources:
   - ./operatorgroup.yaml
   - ./subscription.yaml
   - ./console-plugin.yaml
-  - ./installPlan-approval-job.yaml
+  - ./installplan-approval-job.yaml
 patches:
   - target:
       group: operator.openshift.io
