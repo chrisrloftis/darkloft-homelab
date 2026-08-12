@@ -7,7 +7,7 @@ metadata:
     argocd.argoproj.io/sync-wave: "10"
 spec:
   monDataDirHostPath: /var/lib/rook
-  allowWorkloadsOnMaster: true
+  resourceProfile: lean
   placement:
     # --- PIN CRITICAL CORE TO MASTER NODES ---
     rgw:
