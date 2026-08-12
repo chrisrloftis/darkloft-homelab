@@ -43,8 +43,6 @@ spec:
                   operator: Exists
     # --- OFFLOAD AUXILIARY INFRASTRUCTURE TO STANDARD WORKERS ---
     all:
-      # Explicitly clear out operator-forced storage labels
-      nodeSelector: {}
       nodeAffinity:
         requiredDuringSchedulingIgnoredDuringExecution:
           nodeSelectorTerms:
