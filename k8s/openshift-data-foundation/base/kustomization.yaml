@@ -6,6 +6,7 @@ resources:
   - ./subscription.yaml
   - ./console-plugin.yaml
   - ./installplan-approval-job.yaml
+  - ./installplan-job-rbac.yaml
 patches:
   - target:
       group: operator.openshift.io
