@@ -5,7 +5,7 @@ resources:
   - ./operatorgroup.yaml
   - ./subscription.yaml
   - ./console-plugin.yaml
-  - installplan-approval-job.yaml
+  - ./installplan-job.yaml
   - ./installplan-job-rbac.yaml
 patches:
   - target:
