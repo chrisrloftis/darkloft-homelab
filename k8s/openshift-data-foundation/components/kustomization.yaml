@@ -1,8 +1,9 @@
 apiVersion: kustomize.config.k8s.io/v1alpha1
 kind: Component
-resources:
-  - ./storage-aux-workloads.yaml
-  - ./storage-core-workloads.yaml
+resources: []
+  # - ./storage-aux-workloads.yaml
+  # - ./storage-core-workloads.yaml
+  # - ./nooba-db-patch.yaml
 patches:
   # --- CRITICAL CORE (Must run on Masters alongside Storage) ---
   - path: ./storage-core-workloads.yaml
