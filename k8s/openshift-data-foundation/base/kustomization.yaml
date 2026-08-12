@@ -5,8 +5,7 @@ resources:
   - ./operatorgroup.yaml
   - ./subscription.yaml
   - ./console-plugin.yaml
-  - ./rook-operator-config.yaml
-  # - ./odf-master-patcher.yaml
+  # - ./rook-operator-config.yaml
 patches:
   - target:
       group: operator.openshift.io
@@ -16,29 +15,29 @@ patches:
       - op: add
         path: /spec/plugins/-
         value: odf-console
-  - target:
-      kind: Deployment
-      namespace: openshift-storage
-    patch: |-
-      - op: add
-        path: /spec/template/spec/tolerations
-        value:
-          - key: node-role.kubernetes.io/master
-            operator: Exists
-            effect: NoSchedule
-          - key: node-role.kubernetes.io/control-plane
-            operator: Exists
-            effect: NoSchedule
-  - target:
-      kind: StatefulSet
-      namespace: openshift-storage
-    patch: |-
-      - op: add
-        path: /spec/template/spec/tolerations
-        value:
-          - key: node-role.kubernetes.io/master
-            operator: Exists
-            effect: NoSchedule
-          - key: node-role.kubernetes.io/control-plane
-            operator: Exists
-            effect: NoSchedule
+  # - target:
+  #     kind: Deployment
+  #     namespace: openshift-storage
+  #   patch: |-
+  #     - op: add
+  #       path: /spec/template/spec/tolerations
+  #       value:
+  #         - key: node-role.kubernetes.io/master
+  #           operator: Exists
+  #           effect: NoSchedule
+  #         - key: node-role.kubernetes.io/control-plane
+  #           operator: Exists
+  #           effect: NoSchedule
+  # - target:
+  #     kind: StatefulSet
+  #     namespace: openshift-storage
+  #   patch: |-
+  #     - op: add
+  #       path: /spec/template/spec/tolerations
+  #       value:
+  #         - key: node-role.kubernetes.io/master
+  #           operator: Exists
+  #           effect: NoSchedule
+  #         - key: node-role.kubernetes.io/control-plane
+  #           operator: Exists
+  #           effect: NoSchedule
