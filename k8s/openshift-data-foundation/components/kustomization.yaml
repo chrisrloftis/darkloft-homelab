@@ -8,14 +8,6 @@ patches:
       namespace: openshift-storage
       kind: Deployment
       labelSelector: "app=rook-ceph-rgw"
-  # Custom NooBaa Database Group (Patched via prior step)
-  - path: ./nooba-db-patch.yaml
-    target:
-      group: postgresql.cnpg.noobaa.io
-      version: v1
-      kind: Cluster
-      name: noobaa-db-pg-cluster
-      namespace: openshift-storage
   # --- AUXILIARY INFRASTRUCTURE (Offloaded to Workers) ---
   - path: ./storage-aux-workloads.yaml
     target:
