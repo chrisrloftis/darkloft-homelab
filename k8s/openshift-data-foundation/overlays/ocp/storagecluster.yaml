@@ -7,15 +7,37 @@ metadata:
     argocd.argoproj.io/sync-wave: "10"
 spec:
   monDataDirHostPath: /var/lib/rook
-  # placement:
-  #   all:
-  #     tolerations:
-  #       - key: node-role.kubernetes.io/master
-  #         operator: Exists
-  #         effect: NoSchedule
-  #       - key: node-role.kubernetes.io/control-plane
-  #         operator: Exists
-  #         effect: NoSchedule
+  allowWorkloadsOnMaster: true
+  placement:
+    # --- PIN CRITICAL CORE TO MASTER NODES ---
+    rgw:
+      tolerations:
+        - key: node-role.kubernetes.io/master
+          operator: Exists
+          effect: NoSchedule
+        - key: node-role.kubernetes.io/control-plane
+          operator: Exists
+          effect: NoSchedule
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+            - matchExpressions:
+                - key: node-role.kubernetes.io/control-plane
+                  operator: Exists
+            - matchExpressions:
+                - key: node-role.kubernetes.io/master
+                  operator: Exists
+
+    # --- OFFLOAD AUXILIARY INFRASTRUCTURE TO WORKERS ---
+    # (Leaving tolerations empty forces them off the masters)
+    monitoring:
+      tolerations: []
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+            - matchExpressions:
+                - key: node-role.kubernetes.io/worker
+                  operator: Exists
   storageDeviceSets:
     - name: ocs-deviceset
       count: 1          
