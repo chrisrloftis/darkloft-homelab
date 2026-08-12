@@ -24,13 +24,6 @@ patches:
       namespace: openshift-storage
       kind: Deployment
       labelSelector: "app=ocs-provider-server"
-  - path: ./ceph-priority-patch.yaml
-    target:
-      group: ceph.rook.io
-      version: v1
-      kind: CephFilesystem
-      name: ocs-storagecluster-cephfilesystem
-      namespace: openshift-storage
   - path: ./noobaa-infra-patch.yaml
     target:
       group: noobaa.io
