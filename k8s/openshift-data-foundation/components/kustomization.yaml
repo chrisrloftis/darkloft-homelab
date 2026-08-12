@@ -1,37 +1,48 @@
 apiVersion: kustomize.config.k8s.io/v1alpha1
 kind: Component
 resources: []
-  # - ./storage-aux-workloads.yaml
-  # - ./storage-core-workloads.yaml
-  # - ./nooba-db-patch.yaml
 patches:
-  # --- CRITICAL CORE (Must run on Masters alongside Storage) ---
-  - path: ./storage-core-workloads.yaml
+  # --- CRITICAL CORE (Pinned to Masters) ---
+  - path: storage-core-workloads.yaml
     target:
       namespace: openshift-storage
       kind: Deployment
-      name: rook-ceph-rgw-ocs-storagecluster-cephobjectstore-a
-  # The NooBaa DB Custom Resource must also be pinned to masters for storage attachment
-  - path: ./noobaa-db-patch.yaml
+      labelSelector: "app=rook-ceph-rgw"
+  # Custom NooBaa Database Group (Patched via prior step)
+  - path: ./nooba-db-patch.yaml
     target:
-      group: postgresql.cnpg.io
+      group: postgresql.cnpg.noobaa.io
       version: v1
       kind: Cluster
       name: noobaa-db-pg-cluster
       namespace: openshift-storage
-  # --- AUXILIARY INFRASTRUCTURE (Offloaded to Worker Nodes) ---
+  # --- AUXILIARY INFRASTRUCTURE (Offloaded to Workers) ---
   - path: ./storage-aux-workloads.yaml
     target:
       namespace: openshift-storage
       kind: Deployment
-      name: ocs-metrics-exporter
+      labelSelector: "app=ocs-metrics-exporter"
   - path: ./storage-aux-workloads.yaml
     target:
       namespace: openshift-storage
       kind: Deployment
-      name: odf-blackbox-exporter
+      labelSelector: "app=odf-blackbox-exporter"
   - path: ./storage-aux-workloads.yaml
     target:
       namespace: openshift-storage
       kind: Deployment
-      name: ocs-provider-server
+      labelSelector: "app=ocs-provider-server"
+  - path: ./ceph-priority-patch.yaml
+    target:
+      group: ceph.rook.io
+      version: v1
+      kind: CephFilesystem
+      name: ocs-storagecluster-cephfilesystem
+      namespace: openshift-storage
+  - path: ./noobaa-infra-patch.yaml
+    target:
+      group: noobaa.io
+      version: v1alpha1
+      kind: NooBaa
+      name: noobaa
+      namespace: openshift-storage
