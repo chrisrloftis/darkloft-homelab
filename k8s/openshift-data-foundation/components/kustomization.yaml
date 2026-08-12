@@ -1,0 +1,36 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ./storage-aux-workloads.yaml
+  - ./storage-core-workloads.yaml
+patches:
+  # --- CRITICAL CORE (Must run on Masters alongside Storage) ---
+  - path: core-master-patch.yaml
+    target:
+      namespace: openshift-storage
+      kind: Deployment
+      name: rook-ceph-rgw-ocs-storagecluster-cephobjectstore-a
+  # The NooBaa DB Custom Resource must also be pinned to masters for storage attachment
+  - path: noobaa-db-patch.yaml
+    target:
+      group: postgresql.cnpg.io
+      version: v1
+      kind: Cluster
+      name: noobaa-db-pg-cluster
+      namespace: openshift-storage
+  # --- AUXILIARY INFRASTRUCTURE (Offloaded to Worker Nodes) ---
+  - path: aux-worker-patch.yaml
+    target:
+      namespace: openshift-storage
+      kind: Deployment
+      name: ocs-metrics-exporter
+  - path: aux-worker-patch.yaml
+    target:
+      namespace: openshift-storage
+      kind: Deployment
+      name: odf-blackbox-exporter
+  - path: aux-worker-patch.yaml
+    target:
+      namespace: openshift-storage
+      kind: Deployment
+      name: ocs-provider-server
