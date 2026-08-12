@@ -42,13 +42,13 @@ spec:
                 - key: node-role.kubernetes.io/control-plane
                   operator: Exists
     # --- OFFLOAD AUXILIARY INFRASTRUCTURE TO STANDARD WORKERS ---
-    all:
-      nodeAffinity:
-        requiredDuringSchedulingIgnoredDuringExecution:
-          nodeSelectorTerms:
-            - matchExpressions:
-                - key: node-role.kubernetes.io/worker
-                  operator: Exists
+    # all:
+    #   nodeAffinity:
+    #     requiredDuringSchedulingIgnoredDuringExecution:
+    #       nodeSelectorTerms:
+    #         - matchExpressions:
+    #             - key: node-role.kubernetes.io/worker
+    #               operator: Exists
   storageDeviceSets:
     - name: ocs-deviceset
       count: 1          
