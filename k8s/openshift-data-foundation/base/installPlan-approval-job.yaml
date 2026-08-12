@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: installPlanApprovalJob
+  name: installplan-approval-job
   namespace: openshift-storage
   annotations:
     # Forces ArgoCD to execute this ONLY after the subscription sync passes
