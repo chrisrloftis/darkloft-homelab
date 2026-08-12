@@ -1,17 +1,18 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: installplan-approval-job
+  name: installplanapprovaljob
   namespace: openshift-storage
   annotations:
-    # Forces ArgoCD to execute this ONLY after the subscription sync passes
+    # Triggers execution ONLY after the subscription sync passes
     argocd.argoproj.io/hook: PostSync
     # Cleans up the job pod automatically after it finishes running
     argocd.argoproj.io/hook-delete-policy: HookSucceeded
 spec:
   template:
     spec:
-      serviceAccountName: cli-job-sa # Ensure this SA has permission to patch installplans
+      # 1. Mounts the authorized security tokens for API manipulation
+      serviceAccountName: cli-job-sa
       restartPolicy: OnFailure
       containers:
         - name: approve-plan
@@ -20,14 +21,14 @@ spec:
             - /bin/bash
             - -c
             - |
-              echo "Waiting for OLM to generate the InstallPlan..."
+              echo "Waiting for OLM to generate the 4.22.1 InstallPlan..."
               sleep 15
               
-              # Safely isolates the exact unapproved plan name targeting 4.22.1
+              # Isolates the exact unapproved plan name targeting 4.22.1
               PLAN_NAME=$(oc get installplan -n openshift-storage -o json | jq -r '.items[] | select(.spec.approved==false and .spec.clusterServiceVersionNames[] | contains("4.22.1")) | .metadata.name')
               
               if [ -z "$PLAN_NAME" ] || [ "$PLAN_NAME" == "null" ]; then
-                echo "No pending 4.22.1 InstallPlan found. It may already be approved."
+                echo "No pending 4.22.1 InstallPlan found. It may already be processing."
                 exit 0
               fi
               

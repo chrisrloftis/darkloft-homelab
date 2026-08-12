@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: cli-job-sa
+  namespace: openshift-storage
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: installplan-approver-role
+  namespace: openshift-storage
+rules:
+  # Allows the job to read subscription versions and patch pending upgrade plans
+  - apiGroups: ["://coreos.com"]
+    resources: ["installplans", "subscriptions"]
+    verbs: ["get", "list", "watch", "patch", "update"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: bind-installplan-approver
+  namespace: openshift-storage
+subjects:
+  - kind: ServiceAccount
+    name: cli-job-sa
+    namespace: openshift-storage
+roleRef:
+  kind: Role
+  name: installplan-approver-role
+  apiGroup: rbac.authorization.k8s.io
