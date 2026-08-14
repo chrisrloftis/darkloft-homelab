@@ -8,6 +8,7 @@ resources:
 - ./console-plugin.yaml
 - ./operatorgroup.yaml
 - ./network-policy.yaml
+- ./subscription.yaml
 patches:
   - target:
       group: operator.openshift.io
