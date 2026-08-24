@@ -8,6 +8,7 @@ resources:
   - ./localvolumediscoveryresults.yaml
   - ./localvolumes.yaml
   - ./localvolumesets.yaml
+  - ./installplan-job.yaml
   - ./prometheus-role-binding.yaml
   - ./prometheus-role.yaml
   - ./subscription.yaml
