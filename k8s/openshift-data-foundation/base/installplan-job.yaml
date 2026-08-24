@@ -1,36 +1,138 @@
-apiVersion: batch/v1
-kind: Job
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
 metadata:
-  name: installplanapprovaljob
+  name: installplan-approvers
+  namespace: openshift-storage
+  labels:
+    app.kubernetes.io/instance: odf
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: installplan-approver
+subjects:
+  - kind: ServiceAccount
+    name: installplan-approver-job
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: installplan-approver-job
+  namespace: openshift-storage
+  labels:
+    app.kubernetes.io/instance: odf
+---
+kind: Job
+apiVersion: batch/v1
+metadata:
+  name: installplan-approver-odf
   namespace: openshift-storage
   annotations:
-    # Triggers execution ONLY after the subscription sync passes
-    argocd.argoproj.io/hook: PostSync
-    # Cleans up the job pod automatically after it finishes running
+    argocd.argoproj.io/hook: Sync
     argocd.argoproj.io/hook-delete-policy: HookSucceeded
+    argocd.argoproj.io/sync-wave: "0"
+    # checkov.io/skip1: CKV_K8S_38=Need to Approve Install Plans
+    # checkov.io/skip2: CKV_K8S_40=OpenShift Injects Random UID
+    # checkov.io/skip3: CKV_K8S_43=Don't Mind Tag for This
+    # gitops-ci.k8s.io/exempt-image-checksum: "registry.arthurvardevanyan.com/homelab/toolbox:not_latest"
+  labels:
+    app.kubernetes.io/instance: odf
 spec:
+  parallelism: 1
+  backoffLimit: 0
+  ttlSecondsAfterFinished: 500
+  completionMode: NonIndexed
+  suspend: false
   template:
+    metadata:
+      labels:
+        app: installplan-approver
     spec:
-      # 1. Mounts the authorized security tokens for API manipulation
-      serviceAccountName: cli-job-sa
       restartPolicy: OnFailure
+      schedulerName: default-scheduler
+      activeDeadlineSeconds: 300
+      serviceAccountName: installplan-approver-job
+      automountServiceAccountToken: true
+      enableServiceLinks: true
+      terminationGracePeriodSeconds: 30
+      securityContext:
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
+      # dnsPolicy: ClusterFirst
       containers:
-        - name: approve-plan
+        - name: installplan-approver
+          imagePullPolicy: IfNotPresent
           image: registry.redhat.io/openshift4/ose-cli:latest
+          env:
+            - name: SUBSCRIPTION
+              value: odf-subscription
+            - name: SLEEP
+              value: "15"
+            - name: NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+          securityContext:
+            runAsNonRoot: true
+            privileged: false
+            readOnlyRootFilesystem: true
+            allowPrivilegeEscalation: false
+            seccompProfile:
+              type: RuntimeDefault
+            capabilities:
+              drop:
+                - ALL
+          resources:
+            requests:
+              cpu: 10m
+              memory: 32Mi
+            limits:
+              cpu: 100m
+              memory: 128Mi
           command:
             - /bin/bash
             - -c
             - |
-              echo "Waiting for OLM to generate the 4.22.1 InstallPlan..."
-              sleep 15
-              
-              # Isolates the exact unapproved plan name targeting 4.22.1
-              PLAN_NAME=$(oc get installplan -n openshift-storage -o json | jq -r '.items[] | select(.spec.approved==false and .spec.clusterServiceVersionNames[] | contains("4.22.1")) | .metadata.name')
-              
-              if [ -z "$PLAN_NAME" ] || [ "$PLAN_NAME" == "null" ]; then
-                echo "No pending 4.22.1 InstallPlan found. It may already be processing."
+              set -o errexit  # exit on any failure
+              set -o nounset  # exit on undeclared variables
+              set -o pipefail # return value of all commands in a pipe
+
+              echo "Approving Operator Install. Waiting a few seconds to make sure the InstallPlan gets Created First."
+              sleep "${SLEEP}"
+
+              echo "Processing subscription '${SUBSCRIPTION}'"
+              export INSTALL_PLAN
+              export STARTING_CSV
+              export INSTALL_PLAN_VERSION
+              export INSTALL_CSV
+
+              INSTALLED_CSV=$(kubectl -n "${NAMESPACE}" get subscriptions.operators.coreos.com --field-selector metadata.name="${SUBSCRIPTION}" -o jsonpath='{.items[0].status.installedCSV}')
+              STARTING_CSV=$(kubectl -n "${NAMESPACE}" get subscriptions.operators.coreos.com --field-selector metadata.name="${SUBSCRIPTION}" -o jsonpath='{.items[0].spec.startingCSV}')
+              echo Installed CSV: "${INSTALLED_CSV}"
+              echo Starting CSV: "${STARTING_CSV}"
+
+              # If Installed (Current) Version equals Starting (Target) Version then Exit
+              if [[ "${INSTALLED_CSV}" == "${STARTING_CSV}" ]]; then
+                echo "Installed CSV and Starting CSV Identical, Exiting"
                 exit 0
               fi
-              
-              echo "Found pending InstallPlan: ${PLAN_NAME}. Approving now..."
-              oc patch installplan "${PLAN_NAME}" -n openshift-storage --type merge --patch '{"spec":{"approved":true}}'
+
+              INSTALL_PLAN=$(kubectl -n "${NAMESPACE}" get subscriptions.operators.coreos.com --field-selector metadata.name="${SUBSCRIPTION}" -o jsonpath='{.items[0].status.installPlanRef.name}')
+              INSTALL_PLAN_VERSION=$(kubectl -n "${NAMESPACE}" get installplan "${INSTALL_PLAN}" -o jsonpath="{.spec.clusterServiceVersionNames}")
+              echo Install Plan CSV: "${INSTALL_PLAN_VERSION}"
+              echo Starting CSV: "${STARTING_CSV}"
+
+              # Check if Install Plan Version Matches Target Version, if not Exit.
+              # Common Cause is due to attempting to skip multiple versions
+              if [[ "${INSTALL_PLAN_VERSION}" != *"${STARTING_CSV}"* ]]; then
+                echo "Install Plan Does Not Match Desired Version, Manual Intervention Might be Required"
+                exit 1
+              fi
+
+              # Approve Install Plan if Not Approved
+              if [[ "$(kubectl -n "${NAMESPACE}" get installplan "${INSTALL_PLAN}" -o jsonpath="{.spec.approved}")" == "false" ]]; then
+                echo "Approving Subscription ${SUBSCRIPTION} with install plan $INSTALL_PLAN"
+                kubectl -n "${NAMESPACE}" patch installplan "${INSTALL_PLAN}" --type=json -p='[{"op":"replace","path": "/spec/approved", "value": true}]'
+              else
+                echo "Install Plan '$INSTALL_PLAN' already approved"
+              fi
