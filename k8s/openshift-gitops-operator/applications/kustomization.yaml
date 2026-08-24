@@ -6,4 +6,6 @@ resources:
   - ./openshift-data-foundation.yaml
   - ./openshift-gitops.yaml
   - ./vault.yaml
+  - ./synology-csi.yaml
+  - ./rbac.yaml
 patches: []
