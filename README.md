@@ -5,7 +5,7 @@ HomeLab - OCP/OKD, etc.
 - [ ] Install Synology CSI Driver <https://github.com/SynologyOpenSource/synology-csi/tree/main>
 - [x] ~Repave Worker-2~
 - [x] ~Install LSO + Overlay~
-- [ ] Install ODF + Overlay
+- [x] ~Install ODF + Overlay~
 - [ ] Install Vault + ~Overlay~
 - [x] ~Install GitOps/Argo + Overlay~
 - [ ] Install Virt Operator + Overlay
