@@ -49,5 +49,5 @@ patches:
           spec:
             containers:
               - name: vault
-                image: "registry.connect.redhat.com/hashicorp/vault:1.15"
+                image: "registry.connect.redhat.com/hashicorp/vault@sha256:ac951afbef825228388438dc72b1b04bceeb0bff09d45b6d7238b91dc4d0d91b"
                 imagePullPolicy: IfNotPresent

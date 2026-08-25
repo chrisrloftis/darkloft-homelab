@@ -6,8 +6,8 @@ resources:
   - pdb.yaml
   # - vpa.yaml
   - probes.yaml
-configMapGenerator:
-  - name: vault-config
-    namespace: vault
-    files:
-      - vault.hcl
+# configMapGenerator:
+#   - name: vault-config
+#     namespace: vault
+#     files:
+#       - vault.hcl
