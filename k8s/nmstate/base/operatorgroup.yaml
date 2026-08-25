@@ -6,4 +6,4 @@ metadata:
   generateName: openshift-nmstate-
   name: openshift-nmstate-67hrl
   namespace: openshift-nmstate
-spec: []
+spec:
