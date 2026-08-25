@@ -1,0 +1,12 @@
+apiVersion: machineconfiguration.openshift.io/v1
+kind: MachineConfig
+metadata:
+  labels:
+    node-role.kubernetes.io/master: ""
+  name: 99-master-rhel10-stream-payload
+spec:
+  config:
+    ignition:
+      version: 3.4.0
+  osImageURL: "quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:8f3cd8cb041e536569c62a4755a84fea477193efc5a4faf4434aeca9b705f948" # RHCOS 10
+  # quay.io/openshift-release-dev/ocp-v4.0-art-dev@sha256:1c4e8a2b3db3b691d4d6756182044606a00269ddd1c678fc0f3b6f4c55802975 # RHCOS 9
