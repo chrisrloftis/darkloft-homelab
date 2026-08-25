@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: openshift-nfd
+  namespace: openshift-gitops
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+  labels:
+    app.kubernetes.io/instance: argocd
+spec:
+  destination:
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    path: k8s/openshift-nfd/overlays/ocp
+    repoURL: https://github.com/chrisrloftis/darkloft-homelab
+    targetRevision: HEAD
+  syncPolicy:
+    syncOptions:
+      - ServerSideApply=true
