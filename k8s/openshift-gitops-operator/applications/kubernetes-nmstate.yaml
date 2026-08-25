@@ -13,7 +13,7 @@ spec:
     server: https://kubernetes.default.svc
   project: default
   source:
-    path: k8s/kubernetes-nmstate/overlays/ocp
+    path: k8s/nmstate/overlays/ocp
     repoURL: https://github.com/chrisrloftis/darkloft-homelab
     targetRevision: HEAD
   syncPolicy:
