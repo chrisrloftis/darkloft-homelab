@@ -2,10 +2,14 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 components: []
 resources:
+  - ./kubernetes-nmstate.yaml
   - ./local-storage-operator.yaml
   - ./openshift-data-foundation.yaml
   - ./openshift-gitops.yaml
-  - ./vault.yaml
-  - ./synology-csi.yaml
+  - ./openshift-kmm.yaml
+  - ./openshift-machine-config.yaml
+  - ./openshift-nfd.yaml
   - ./rbac.yaml
+  - ./synology-csi.yaml
+  - ./vault.yaml
 patches: []
