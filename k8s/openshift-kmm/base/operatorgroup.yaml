@@ -1,0 +1,10 @@
+apiVersion: operators.coreos.com/v1
+kind: OperatorGroup
+metadata:
+  annotations:
+    olm.providedAPIs: BootModuleConfig.v1beta1.kmm.sigs.x-k8s.io,Module.v1beta1.kmm.sigs.x-k8s.io,ModuleBuildSignConfig.v1beta1.kmm.sigs.x-k8s.io,ModuleImagesConfig.v1beta1.kmm.sigs.x-k8s.io,NodeModulesConfig.v1beta1.kmm.sigs.x-k8s.io,PreflightValidation.v1beta1.kmm.sigs.x-k8s.io,PreflightValidation.v1beta2.kmm.sigs.x-k8s.io,PreflightValidationOCP.v1beta1.kmm.sigs.x-k8s.io,PreflightValidationOCP.v1beta2.kmm.sigs.x-k8s.io
+  generateName: openshift-kmm-
+  name: openshift-kmm-zzxdq
+  namespace: openshift-kmm
+spec:
+  upgradeStrategy: Default
