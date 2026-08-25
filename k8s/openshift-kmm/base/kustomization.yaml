@@ -3,6 +3,6 @@ kind: Kustomization
 components: []
 resources:
   - namespace.yaml
-  - realtek-r8125.yaml
+  # - realtek-r8125.yaml
   - subscription.yaml
 patches: []
