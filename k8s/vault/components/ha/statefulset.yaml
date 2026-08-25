@@ -137,7 +137,8 @@ spec:
       metadata:
         name: data
       spec:
-        accessModes: "ReadWriteOnce"
+        accessModes: 
+          - "ReadWriteOnce"
         storageClassName: "ocs-storagecluster-ceph-rbd"
         resources:
           requests:
