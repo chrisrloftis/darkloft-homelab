@@ -9,6 +9,7 @@ resources:
 - ./operatorgroup.yaml
 - ./network-policy.yaml
 - ./subscription.yaml
+- ./installplan-job.yaml
 patches:
   - target:
       group: operator.openshift.io
