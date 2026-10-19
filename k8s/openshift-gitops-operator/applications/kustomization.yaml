@@ -6,10 +6,10 @@ resources:
   - ./local-storage-operator.yaml
   - ./openshift-data-foundation.yaml
   - ./openshift-gitops.yaml
-  - ./openshift-kmm.yaml
-  - ./openshift-machine-config.yaml
-  - ./openshift-nfd.yaml
+  # - ./openshift-kmm.yaml
+  # - ./openshift-machine-config.yaml
+  # - ./openshift-nfd.yaml
   - ./rbac.yaml
   - ./synology-csi.yaml
-  - ./vault.yaml
+  # - ./vault.yaml
 patches: []
