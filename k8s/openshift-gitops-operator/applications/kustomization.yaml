@@ -3,8 +3,8 @@ kind: Kustomization
 components: []
 resources:
   - ./kubernetes-nmstate.yaml
-  - ./local-storage-operator.yaml
-  - ./openshift-data-foundation.yaml
+  # - ./local-storage-operator.yaml
+  # - ./openshift-data-foundation.yaml
   - ./openshift-gitops.yaml
   # - ./openshift-kmm.yaml
   # - ./openshift-machine-config.yaml
