@@ -2,6 +2,9 @@ kind: SecurityContextConstraints
 apiVersion: security.openshift.io/v1
 metadata:
   name: synology-csi-scc
+  annotations:
+    argocd.argoproj.io/tracking-id: >-
+      synology-csi:security.openshift.io/SecurityContextConstraints:/synology-csi-scc
 allowHostDirVolumePlugin: true
 allowHostNetwork: true
 allowPrivilegedContainer: true
