@@ -6,4 +6,6 @@ resources:
 - synology-controller.yaml
 - synology-csi-node-ds.yaml
 - synology-scc.yaml
+- csi-driver.yaml
+- service-account.yaml
 patches: []
