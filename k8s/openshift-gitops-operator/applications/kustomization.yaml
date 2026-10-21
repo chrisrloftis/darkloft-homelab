@@ -6,6 +6,7 @@ resources:
   # - ./local-storage-operator.yaml
   # - ./openshift-data-foundation.yaml
   - ./openshift-gitops.yaml
+  - ./openshift-cluster-observability-operator.yaml
   # - ./openshift-kmm.yaml
   # - ./openshift-machine-config.yaml
   # - ./openshift-nfd.yaml
