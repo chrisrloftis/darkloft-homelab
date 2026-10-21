@@ -16,8 +16,7 @@ spec:
   serviceName: synology-csi-controller
   template:
     metadata:
-      annotations:
-        kubectl.kubernetes.io/restartedAt: "2026-06-23T17:38:10-04:00"
+      annotations: []
       labels:
         app: synology-csi-controller
     spec:
