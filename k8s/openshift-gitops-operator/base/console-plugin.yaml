@@ -3,7 +3,7 @@ kind: ConsolePlugin
 metadata:
   name: gitops-plugin
 spec:
-  displayName: "OpenShift GitOps"
+  displayName: "GitOps Plugin"
   backend:
     type: Service
     service:
