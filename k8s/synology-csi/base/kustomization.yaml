@@ -1,0 +1,9 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+components: []
+resources:
+- namespace.yaml
+- synology-controller.yaml
+- synology-csi-node-ds.yaml
+- synology-scc.yaml
+patches: []
