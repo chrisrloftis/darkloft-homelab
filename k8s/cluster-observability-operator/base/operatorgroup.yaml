@@ -3,4 +3,3 @@ kind: OperatorGroup
 metadata:
   name: cluster-observability-operator
   namespace: openshift-cluster-observability-operator
-spec: []
