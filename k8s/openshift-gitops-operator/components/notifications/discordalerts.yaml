@@ -1,0 +1,56 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: argocd-notifications-cm
+  namespace: openshift-gitops
+data:
+  service.webhook.discord: |
+    url: $discord-token
+    headers:
+      - name: Content-Type
+        value: application/json
+  template.discord-sync-succeeded: |
+    webhook:
+      discord:
+        method: POST
+        body: |
+          {
+            "content": "✅ **Sync Succeeded** for Argo CD application **{{.app.metadata.name}}** in cluster **{{.app.spec.destination.server}}**."
+          }
+  template.discord-sync-failed: |
+    webhook:
+      discord:
+        method: POST
+        body: |
+          {
+            "content": "❌ **Sync Failed** for Argo CD application **{{.app.metadata.name}}**."
+          }
+  trigger.on-sync-succeeded: |
+    - description: Application sync succeeded.
+      oncePer: app.status.sync.revision
+      send: [discord-sync-succeeded]
+      when: app.status.sync.status == 'Synced'
+  trigger.on-sync-failed: |
+    - description: Application sync failed.
+      oncePer: app.status.sync.revision
+      send: [discord-sync-failed]
+      when: app.status.sync.status == 'SyncFailed'
+  template.discord-health-degraded: |
+    webhook:
+      discord:
+        method: POST
+        body: |
+          {
+            "content": "⚠️ **Application Degraded!** Argo CD application **{{.app.metadata.name}}** is currently in **{{.app.status.health.status}}** state."
+          }
+  trigger.on-health-degraded: |
+    - description: Application health status is Degraded.
+      send: [discord-health-degraded]
+      when: app.status.health.status == 'Degraded'
+  subscriptions: |
+    - recipients:
+        - discord
+      triggers:
+        - on-sync-succeeded
+        - on-sync-failed
+        - on-health-degraded
