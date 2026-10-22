@@ -10,6 +10,7 @@ resources:
   # - ./openshift-kmm.yaml
   # - ./openshift-machine-config.yaml
   # - ./openshift-nfd.yaml
+  - ./openshift-virtualization.yaml
   - ./rbac.yaml
   - ./synology-csi.yaml
   # - ./vault.yaml
