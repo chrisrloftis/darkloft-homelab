@@ -16,7 +16,6 @@ spec:
   serviceName: synology-csi-controller
   template:
     metadata:
-      annotations: []
       labels:
         app: synology-csi-controller
     spec:
