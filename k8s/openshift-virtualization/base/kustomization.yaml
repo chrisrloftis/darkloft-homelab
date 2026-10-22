@@ -6,4 +6,5 @@ resources:
 - ./installplanjob.yaml
 - ./operatorgroup.yaml
 - ./subscription.yaml
+- ./hyperconverged.yaml
 patches: []
