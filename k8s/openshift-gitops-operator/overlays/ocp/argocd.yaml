@@ -56,7 +56,7 @@ spec:
     enabled: false
   networkPolicy: {}
   notifications:
-    enabled: false
+    enabled: true
   prometheus:
     enabled: false
     ingress:
