@@ -20,7 +20,10 @@ spec:
   syncPolicy:
     syncOptions:
       - CreateNamespace=true
-      - ServerSideApply=true  
+      - ServerSideApply=true
+    automated:
+      enabled: true
+      prune: true  
   # ignoreDifferences:
   #   - group: apps
   #     kind: Deployment
