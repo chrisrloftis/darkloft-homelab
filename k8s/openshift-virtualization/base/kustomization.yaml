@@ -5,5 +5,5 @@ resources:
 - ./namespace.yaml
 - ./installplanjob.yaml
 - ./operatorgroup.yaml
-- ./susbcription.yaml
+- ./subscription.yaml
 patches: []
