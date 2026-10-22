@@ -5,7 +5,10 @@ metadata:
   namespace: openshift-gitops
 data:
   service.webhook.discord: |
-    url: $discord-token
+    url: ""
+    secretRef:
+      name: openshift-gitops-notifications-secret
+      key: discord-token
     headers:
       - name: Content-Type
         value: application/json
