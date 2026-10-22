@@ -23,6 +23,3 @@ spec:
     automated:
       enabled: true
       prune: true
-    automated:
-      enabled: true
-      prune: true
