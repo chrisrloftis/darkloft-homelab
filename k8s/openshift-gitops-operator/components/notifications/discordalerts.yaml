@@ -54,7 +54,7 @@ data:
       when: app.status.health.status == 'Degraded'
   subscriptions: |
     - recipients:
-      - webhook:discord
+      - discord
       triggers:
       - on-sync-succeeded
       - on-sync-failed
