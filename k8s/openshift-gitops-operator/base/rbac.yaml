@@ -48,7 +48,6 @@ kind: ClusterRoleBinding
 metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "0"
-  labels: []
   name: argocd-application-controller-cluster-admin
 roleRef:
   apiGroup: rbac.authorization.k8s.io
