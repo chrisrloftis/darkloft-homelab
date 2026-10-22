@@ -4,11 +4,13 @@ metadata:
   name: argocd-notifications-cm
   namespace: openshift-gitops
 data:
+  secrets: |
+    - name: discord-token
+      secretRef:
+        name: openshift-gitops-notifications-secret
+        key: discord-token
   service.webhook.discord: |
-    url: ""
-    secretRef:
-      name: openshift-gitops-notifications-secret
-      key: discord-token
+    url: $discord-token
     headers:
       - name: Content-Type
         value: application/json
