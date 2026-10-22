@@ -20,7 +20,7 @@ data:
         method: POST
         body: |
           {
-            "content": "✅ **Sync Succeeded** for Argo CD application **{{.app.metadata.name}}** in cluster **{{.app.spec.destination.server}}**."
+            "content": "✅ **Sync Succeeded** for Argo CD application **{{.app.metadata.name}}** in cluster **{{.app.spec.destination.name}}**."
           }
   template.discord-sync-failed: |
     webhook:
