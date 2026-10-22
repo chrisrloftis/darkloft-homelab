@@ -6,8 +6,6 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "1"
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
-    notifications.argoproj.io/subscribe.on-sync-succeeded.discord: ""
-    notifications.argoproj.io/subscribe.on-sync-failed.discord: ""
   labels:
     app.kubernetes.io/instance: argocd
 spec:

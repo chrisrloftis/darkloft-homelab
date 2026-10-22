@@ -35,3 +35,22 @@ data:
       oncePer: app.status.sync.revision
       send: [discord-sync-failed]
       when: app.status.sync.status == 'SyncFailed'
+  template.discord-health-degraded: |
+    webhook:
+      discord:
+        method: POST
+        body: |
+          {
+            "content": "⚠️ **Application Degraded!** Argo CD application **{{.app.metadata.name}}** is currently in **{{.app.status.health.status}}** state."
+          }
+  trigger.on-health-degraded: |
+    - description: Application health status is Degraded.
+      send: [discord-health-degraded]
+      when: app.status.health.status == 'Degraded'
+  subscriptions: |
+    - recipients:
+        - discord
+      triggers:
+        - on-sync-succeeded
+        - on-sync-failed
+        - on-health-degraded
