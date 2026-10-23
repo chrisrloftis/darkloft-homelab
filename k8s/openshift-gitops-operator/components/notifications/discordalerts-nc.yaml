@@ -51,7 +51,7 @@ spec:
         send: [discord-health-degraded]
         when: app.status.health.status == 'Degraded'
   subscriptions:
-    - recipients:
+      recipients:
       - discord
       triggers:
       - on-sync-succeeded
