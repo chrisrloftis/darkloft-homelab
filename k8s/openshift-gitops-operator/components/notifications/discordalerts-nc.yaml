@@ -50,10 +50,11 @@ spec:
       - description: Application health status is Degraded.
         send: [discord-health-degraded]
         when: app.status.health.status == 'Degraded'
-  subscriptions: |
-    - recipients:
-      - discord
-      triggers:
-      - on-sync-succeeded
-      - on-sync-failed
-      - on-health-degraded
+  subscriptions:
+    subscriptions: |
+      - recipients:
+        - discord
+        triggers:
+        - on-sync-succeeded
+        - on-sync-failed
+        - on-health-degraded
