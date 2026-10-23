@@ -57,12 +57,12 @@ spec:
   networkPolicy: {}
   notifications:
     enabled: true
-    extraConfig:
-      service.webhook.discord: |
-        url: $webhook
-        headers:
-          - name: Content-Type
-            value: application/json
+  extraConfig:
+    service.webhook.discord: |
+      url: $webhook
+      headers:
+        - name: Content-Type
+          value: application/json
   prometheus:
     enabled: false
     ingress:
