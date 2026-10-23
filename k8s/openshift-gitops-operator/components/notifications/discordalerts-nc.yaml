@@ -4,13 +4,13 @@ metadata:
   name: default-notifications-configuration
   namespace: openshift-gitops
 spec:
-  services: |
+  services:
     webhook.discord: |
       url: $webhook
       headers:
         - name: Content-Type
           value: application/json
-  templates: |
+  templates:
     template.discord-sync-succeeded: |
       webhook:
         discord:
@@ -35,7 +35,7 @@ spec:
             {
               "content": "⚠️ **Application Degraded!** Argo CD application **{{.app.metadata.name}}** is currently in **{{.app.status.health.status}}** state."
             }
-  triggers: |
+  triggers:
     trigger.on-sync-succeeded: |
       - description: Application sync succeeded.
         oncePer: app.status?.operationState.syncResult.revision
@@ -50,7 +50,7 @@ spec:
       - description: Application health status is Degraded.
         send: [discord-health-degraded]
         when: app.status.health.status == 'Degraded'
-  subscriptions: |
+  subscriptions:
     - recipients:
       - discord
       triggers:
