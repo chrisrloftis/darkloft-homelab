@@ -5,37 +5,22 @@ metadata:
   namespace: openshift-gitops
 spec:
   services:
-    webhook: |
-      discord:
-        url: $webhook
-        headers:
-          - name: Content-Type
-            value: application/json
+    slack: |
+      # Point this directly to your Discord webhook URL, but append '/slack' to the end of it
+      token: $webhook
   templates:
     template.discord-sync-succeeded: |
-      webhook:
-        discord:
-          method: POST
-          body: |
-            {
-              "content": "✅ **Sync Succeeded** for Argo CD application **{{.app.metadata.name}}** in cluster **{{.app.spec.destination.name}}**."
-            }
+      slack:
+        attachments: |
+          [{"color": "#2ecc71", "text": "✅ *Sync Succeeded* for Argo CD application *{{.app.metadata.name}}* in cluster *{{.app.spec.destination.name}}*."}]
     template.discord-sync-failed: |
-      webhook:
-        discord:
-          method: POST
-          body: |
-            {
-              "content": "❌ **Sync Failed** for Argo CD application **{{.app.metadata.name}}**."
-            }
+      slack:
+        attachments: |
+          [{"color": "#e74c3c", "text": "❌ *Sync Failed* for Argo CD application *{{.app.metadata.name}}*."}]
     template.discord-health-degraded: |
-      webhook:
-        discord:
-          method: POST
-          body: |
-            {
-              "content": "⚠️ **Application Degraded!** Argo CD application **{{.app.metadata.name}}** is currently in **{{.app.status.health.status}}** state."
-            }
+      slack:
+        attachments: |
+          [{"color": "#f1c40f", "text": "⚠️ *Application Degraded!* Argo CD application *{{.app.metadata.name}}* is currently in *{{.app.status.health.status}}* state."}]
   triggers:
     trigger.on-sync-succeeded: |
       - description: Application sync succeeded.
@@ -54,7 +39,7 @@ spec:
   subscriptions:
     subscriptions: |
       - recipients:
-        - webhook:discord
+        - slack:general
         triggers:
         - on-sync-succeeded
         - on-sync-failed
