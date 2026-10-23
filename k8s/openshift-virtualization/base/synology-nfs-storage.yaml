@@ -1,0 +1,11 @@
+apiVersion: cdi.kubevirt.io/v1beta1
+kind: StorageProfile
+metadata:
+  annotations:
+    cdi.kubevirt.io/minimumSupportedPvcSize: 1Gi
+  name: synology-nfs-storage
+spec:
+  claimPropertySets:
+    - accessModes:
+        - ReadWriteMany
+      volumeMode: Filesystem

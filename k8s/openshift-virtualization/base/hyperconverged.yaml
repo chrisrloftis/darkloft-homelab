@@ -33,7 +33,6 @@ spec:
   featureGates:
     enableMultiArchBootImageImport: false
     downwardMetrics: false
-    disableAutoBootImageProvisioning: true
     disableMDevConfiguration: false
     declarativeHotplugVolumes: false
     deployKubeSecondaryDNS: false
