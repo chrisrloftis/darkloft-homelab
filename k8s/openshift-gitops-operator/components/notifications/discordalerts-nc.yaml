@@ -4,11 +4,6 @@ metadata:
   name: default-notifications-configuration
   namespace: openshift-gitops
 spec:
-  secrets: |
-    - name: webhook
-      secretRef:
-        name: openshift-gitops-notifications-secret
-        key: webhook
   services: |
     webhook.discord: |
       url: $webhook
