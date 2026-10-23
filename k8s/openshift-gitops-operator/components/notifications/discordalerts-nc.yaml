@@ -5,8 +5,8 @@ metadata:
   namespace: openshift-gitops
 spec:
   services:
-    webhook:
-      discord: |
+    webhook: |
+      discord:
         url: $webhook
         headers:
           - name: Content-Type
