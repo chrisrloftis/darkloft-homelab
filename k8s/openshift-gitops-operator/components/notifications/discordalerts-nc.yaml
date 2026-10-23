@@ -54,7 +54,7 @@ spec:
   subscriptions:
     subscriptions: |
       - recipients:
-        - webhook.discord
+        - webhook:discord
         triggers:
         - on-sync-succeeded
         - on-sync-failed
