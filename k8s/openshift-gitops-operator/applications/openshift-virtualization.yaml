@@ -10,8 +10,7 @@ metadata:
     app.kubernetes.io/instance: argocd
 spec:
   destination:
-    name: ocp.darkloft.local
-    namespace: openshift-gitops
+    server: https://kubernetes.default.svc
   project: default
   source:
     path: k8s/openshift-virtualization/overlays/ocp
