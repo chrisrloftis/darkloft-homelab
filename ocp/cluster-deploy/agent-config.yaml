@@ -37,12 +37,6 @@ hosts:
             port:
               - enp3s0
               - eno1
-        - name: enp3s0
-          description: enp3s0
-          state: down
-        - name: eno1
-          description: eno1
-          state: down
       dns-resolver:
         config:
           server:
@@ -85,12 +79,6 @@ hosts:
             port:
               - enp3s0
               - eno1
-        - name: enp3s0
-          description: enp3s0
-          state: down
-        - name: eno1
-          description: eno1
-          state: down
       dns-resolver:
         config:
           server:
@@ -133,12 +121,6 @@ hosts:
             port:
               - enp3s0
               - eno1
-        - name: enp3s0
-          description: enp3s0
-          state: down
-        - name: eno1
-          description: eno1
-          state: down
       dns-resolver:
         config:
           server:
@@ -181,12 +163,6 @@ hosts:
             port:
               - enp6s0
               - enp7s0
-        - name: enp6s0
-          description: enp6s0
-          state: down
-        - name: enp7s0
-          description: enp7s0
-          state: down
       dns-resolver:
         config:
           server:
@@ -229,12 +205,6 @@ hosts:
             port:
               - enp4s0
               - enp3s0
-        - name: enp4s0
-          description: enp4s0
-          state: down
-        - name: enp3s0
-          description: enp3s0
-          state: down
       dns-resolver:
         config:
           server:
