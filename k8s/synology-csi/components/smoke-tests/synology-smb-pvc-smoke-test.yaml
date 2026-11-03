@@ -40,22 +40,3 @@ spec:
           persistentVolumeClaim:
             claimName: synology-smb-pvc-test # Uses your existing test PVC
   backoffLimit: 1
----
-apiVersion: v1
-kind: Pod
-metadata:
-  name: csi-debug-pod
-  namespace: smoke-tests
-spec:
-  containers:
-    - name: debug-container
-      image: alpine
-      command: ["cat", "/data/test.txt"]
-      volumeMounts:
-        - name: test-volume
-          mountPath: /data
-  restartPolicy: Never
-  volumes:
-    - name: test-volume
-      persistentVolumeClaim:
-        claimName: synology-smb-pvc-test
