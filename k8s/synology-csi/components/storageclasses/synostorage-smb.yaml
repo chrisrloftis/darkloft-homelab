@@ -6,7 +6,7 @@ provisioner: csi.san.synology.com
 parameters:
   protocol: "smb"
   dsm: '192.168.3.165'
-  location: '/volume1'
+  location: '/volume1/ocp-storage'
   csi.storage.k8s.io/node-stage-secret-name: "client-info-secret"
   csi.storage.k8s.io/node-stage-secret-namespace: "synology-csi"
   fsType: cifs
