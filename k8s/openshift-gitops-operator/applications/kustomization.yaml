@@ -12,6 +12,6 @@ resources:
   # - ./openshift-nfd.yaml
   - ./openshift-virtualization.yaml
   - ./rbac.yaml
-  # - ./synology-csi.yaml
+  - ./synology-csi.yaml
   # - ./vault.yaml
 patches: []
