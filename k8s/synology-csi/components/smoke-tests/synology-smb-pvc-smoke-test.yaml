@@ -9,7 +9,7 @@ spec:
   resources:
     requests:
       storage: 2Gi
-  storageClassName: synostorage-smb
+  storageClassName: synology-smb-storage
   volumeMode: Filesystem
 --- 
 apiVersion: batch/v1

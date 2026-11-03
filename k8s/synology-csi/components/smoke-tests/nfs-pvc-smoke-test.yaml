@@ -11,3 +11,31 @@ spec:
       storage: 2Gi
   storageClassName: synology-nfs-storage
   volumeMode: Filesystem
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: synology-nfs-test-job
+  namespace: smoke-tests
+spec:
+  template:
+    spec:
+      containers:
+        - name: test-container
+          image: alpine
+          command:
+            - "/bin/sh"
+            - "-c"
+            - |
+              for i in 1 2 3 4 5; do
+                echo "Line $i: CSI is working at $(date)" >> /data/test.txt
+                if [ $i -lt 5 ]; then sleep 6; fi
+              done
+          volumeMounts:
+            - name: test-volume
+              mountPath: /data
+      restartPolicy: Never
+      volumes:
+        - name: test-volume
+          persistentVolumeClaim:
+            claimName: synology-nfs-pvc-test # Uses your existing test PVC
