@@ -14,7 +14,7 @@ defaultAddCapabilities: []
 fsGroup:
   type: RunAsAny
 groups: []
-priority:
+priority: null
 readOnlyRootFilesystem: false
 requiredDropCapabilities: []
 runAsUser:

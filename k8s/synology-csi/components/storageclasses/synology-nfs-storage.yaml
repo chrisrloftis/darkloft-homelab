@@ -7,7 +7,7 @@ parameters:
   protocol: "nfs"
   dsm: '192.168.3.165'
   location: "/volume1"
-  nasPermissions: '0777'
+  nas_permissions: '0777' 
   csi.storage.k8s.io/node-stage-secret-name: "client-info-secret"
   csi.storage.k8s.io/node-stage-secret-namespace: "synology-csi"
 reclaimPolicy: Delete
@@ -17,4 +17,3 @@ mountOptions:
   - nfsvers=4.1
   - hard
   - rw
-  - context="system_u:object_r:container_file_t:s0"
