@@ -56,7 +56,7 @@ spec:
             fieldRef:
               apiVersion: v1
               fieldPath: spec.nodeName
-        image: synology/synology-csi:v1.3.0
+        image: synology/synology-csi:v1.4.0
         imagePullPolicy: IfNotPresent
         name: csi-plugin
         resources: {}
