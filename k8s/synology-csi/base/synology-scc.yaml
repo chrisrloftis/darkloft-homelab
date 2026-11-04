@@ -13,8 +13,8 @@ allowedCapabilities:
 defaultAddCapabilities: []
 fsGroup:
   type: RunAsAny
-groups: ["system:serviceaccounts"]
-priority: 20
+groups: []
+priority:
 readOnlyRootFilesystem: false
 requiredDropCapabilities: []
 runAsUser:

@@ -10,6 +10,6 @@ parameters:
   nasPermissions: '0777'
   csi.storage.k8s.io/node-stage-secret-name: "client-info-secret"
   csi.storage.k8s.io/node-stage-secret-namespace: "synology-csi"
-  fsType: cifs
+  # fsType: cifs
 reclaimPolicy: Delete
 allowVolumeExpansion: true
