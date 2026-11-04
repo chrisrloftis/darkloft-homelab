@@ -7,3 +7,5 @@ spec:
   podInfoOnMount: true
   volumeLifecycleModes:
     - Persistent
+  seLinuxMount: true
+  fsGroupPolicy: ReadWriteOnceWithFSType
