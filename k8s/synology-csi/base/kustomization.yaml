@@ -3,9 +3,8 @@ kind: Kustomization
 components: []
 resources:
 - namespace.yaml
-- synology-controller.yaml
-- synology-csi-node-ds.yaml
+- controller.yml
+- node.yml
 - synology-scc.yaml
-- csi-driver.yaml
-- service-account.yaml
+- csi-driver.yml
 patches: []
