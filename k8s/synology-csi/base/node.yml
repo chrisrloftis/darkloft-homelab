@@ -119,9 +119,6 @@ spec:
               mountPath: /host
             - name: device-dir
               mountPath: /dev
-            - name: pods-mount-dir
-              mountPath: /var/lib/kubelet
-              mountPropagation: Bidirectional 
       volumes:
         - name: kubelet-dir
           hostPath:
@@ -146,7 +143,3 @@ spec:
           hostPath:
             path: /dev
             type: Directory
-        - name: pods-mount-dir
-          hostPath:
-            path: /var/lib/kubelet
-            type: DirectoryOrCreate
