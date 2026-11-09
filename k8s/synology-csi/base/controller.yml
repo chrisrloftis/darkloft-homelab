@@ -155,6 +155,8 @@ spec:
           env:
             - name: CSI_ENDPOINT
               value: unix:///var/lib/csi/sockets/pluginproxy/csi.sock
+            - name: NAS_PERMISSIONS
+              value: "0777"
           imagePullPolicy: IfNotPresent
           volumeMounts:
             - name: socket-dir
