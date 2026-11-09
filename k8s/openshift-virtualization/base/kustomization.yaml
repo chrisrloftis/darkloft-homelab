@@ -7,7 +7,7 @@ resources:
 - ./operatorgroup.yaml
 - ./subscription.yaml
 - ./hyperconverged.yaml
-- ./synology-nfs-storage.yaml
-- ./synology-smb-storage.yaml
+# - ./synology-nfs-storage.yaml
+# - ./synology-smb-storage.yaml
 - ./rbac.yaml
 patches: []
