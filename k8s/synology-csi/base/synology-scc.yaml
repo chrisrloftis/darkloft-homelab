@@ -1,33 +1,27 @@
-kind: SecurityContextConstraints
 apiVersion: security.openshift.io/v1
+kind: SecurityContextConstraints
 metadata:
   name: synology-csi-scc
-  annotations:
-    argocd.argoproj.io/tracking-id: >-
-      synology-csi:security.openshift.io/SecurityContextConstraints:/synology-csi-scc
-allowPrivilegedContainer: true  # Required for host device mounting & chroot
-allowHostDirVolumePlugin: true  # Required to access /var/lib/kubelet and /dev
-allowHostNetwork: true          # Required for iSCSI/NFS node communication
-allowHostPorts: false
-allowHostPID: false
-allowHostIPC: false
-readOnlyRootFilesystem: false
-runAsUser:
-  type: RunAsAny                # Node plugin overrides to user 0 (root) for mounts
-seLinuxContext:
-  type: RunAsAny
+allowHostDirVolumePlugin: true
+allowHostNetwork: true
+allowPrivilegedContainer: true
+allowedCapabilities:
+- 'SYS_ADMIN'
+defaultAddCapabilities: []
 fsGroup:
+  type: RunAsAny
+priority: 10
+readOnlyRootFilesystem: false
+requiredDropCapabilities: []
+runAsUser:
+  type: RunAsAny
+seLinuxContext:
   type: RunAsAny
 supplementalGroups:
   type: RunAsAny
-volumes:
-  - configMap
-  - downwardAPI
-  - emptyDir
-  - persistentVolumeClaim
-  - secret
-  - hostPath                    # Must allow hostpath for mounting storage
 users:
 - system:serviceaccount:synology-csi:csi-controller-sa
 - system:serviceaccount:synology-csi:csi-node-sa
 - system:serviceaccount:synology-csi:csi-snapshotter-sa
+volumes:
+- '*'
