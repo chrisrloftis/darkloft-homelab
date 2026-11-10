@@ -31,6 +31,7 @@ spec:
                 echo "Line $i: CSI is working at $(date)" >> /data/test.txt
                 if [ $i -lt 5 ]; then sleep 6; fi
               done
+              sleep 3600
           volumeMounts:
             - name: test-volume
               mountPath: /data
